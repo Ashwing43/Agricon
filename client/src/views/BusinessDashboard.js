@@ -80,14 +80,14 @@ class BusinessDashboard extends Component {
       console.log(registered);
       this.setState({ registered: registered });
 
-      // var count = await this.state.FarmInstance.methods.getLandsCount().call();
-      // count = parseInt(count);
-      // console.log(typeof (count));
-      // console.log(count);
-      // //this.setState({count:count});
+      var count = await this.state.FarmInstance.methods.CropReqMapCount().call();
+      count = parseInt(count);
+      console.log(typeof (count));
+      console.log(count);
+      //this.setState({count:count});
 
       // countarr.push(<ContractData contract="Farm" method="getLandsCount" />);
-      // userarr.push(<ContractData contract="Farm" method="getBuyersCount" />);
+      userarr.push(<ContractData contract="Farm" method="getFarmersCount" />);
       // reqsarr.push(<ContractData contract="Farm" method="getRequestsCount" />);
 
       var rowsArea = [];
@@ -113,6 +113,7 @@ class BusinessDashboard extends Component {
       //   </tr>)
 
       // }
+      countarr.push(row.length);
       console.log(row);
 
     } catch (error) {
@@ -172,7 +173,7 @@ class BusinessDashboard extends Component {
                       <div class="icon-section">
                         <i class="fa fa-users" aria-hidden="true"></i><br />
                         <medium>Total Farmers</medium><br />
-                        {/* <p> {userarr} </p> */}
+                        <p> {userarr} </p>
                       </div>
                       <div class="detail-section"><br />
                       </div>
@@ -182,8 +183,8 @@ class BusinessDashboard extends Component {
                     <div class="dashbord dashbord-orange">
                       <div class="icon-section">
                         <i class="fa fa-landmark" aria-hidden="true"></i><br />
-                        <medium>Registered CropRquirements Count</medium><br />
-                        {/* <p>{countarr}</p> */}
+                        <medium>Added CropRquirements Count</medium><br />
+                        <p>{countarr}</p>
                       </div>
                       <div class="detail-section"><br />
                       </div>
@@ -206,7 +207,7 @@ class BusinessDashboard extends Component {
             </LoadingContainer>
           </DrizzleProvider>
           <Row>
-            <Col lg="4">
+            <Col lg="3">
               <Card>
                 <CardHeader>
                   <h5 className="title">Wish to Add Crop Requirement !</h5>
@@ -221,14 +222,13 @@ class BusinessDashboard extends Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col lg="4">
+            <Col lg="3">
               <Card>
                 <CardHeader>
                   <h5 className="title">Profile</h5>
                 </CardHeader>
                 <CardBody>
                   <div className="chart-area">
-
                     <Button href="/seller/sellerProfile" className="btn-fill" color="primary">
                       View Profile
                     </Button>
@@ -236,17 +236,31 @@ class BusinessDashboard extends Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col lg="4">
+            <Col lg="3">
               <Card>
                 <CardHeader>
                   <h5 className="title">Requests</h5>
                 </CardHeader>
                 <CardBody>
                   <div className="chart-area">
-
                     <Button href="/Seller/ApproveRequest" disabled={!this.state.verified} className="btn-fill" color="primary">
                       View all Requests
                     </Button>
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col lg="3">
+              <Card>
+                <CardHeader>
+                  {/* <CardTitle>View Signed Contracts!</CardTitle> */}
+                  <h5 className="title">View Signed Contracts!</h5>
+                </CardHeader>
+                <CardBody>
+                <div className="chart-area">
+                  <Button href="/Seller/viewImage" className="btn-fill" color="primary">
+                    View contracts
+                  </Button>
                   </div>
                 </CardBody>
               </Card>
@@ -285,20 +299,6 @@ class BusinessDashboard extends Component {
               </Row>
             </LoadingContainer>
           </DrizzleProvider>
-          <Row>
-            <Col lg="4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>View Signed Contracts!</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Button href="/Seller/viewImage" className="btn-fill" color="primary">
-                    View contracts
-                  </Button>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
         </div>
       </>
 
