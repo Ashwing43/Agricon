@@ -172,7 +172,7 @@ class BusinessDashboard extends Component {
                       <div class="icon-section">
                         <i class="fa fa-users" aria-hidden="true"></i><br />
                         <medium>Total Farmers</medium><br />
-                        <p> {userarr} </p>
+                        {/* <p> {userarr} </p> */}
                       </div>
                       <div class="detail-section"><br />
                       </div>
@@ -183,7 +183,7 @@ class BusinessDashboard extends Component {
                       <div class="icon-section">
                         <i class="fa fa-landmark" aria-hidden="true"></i><br />
                         <medium>Registered CropRquirements Count</medium><br />
-                        <p>{countarr}</p>
+                        {/* <p>{countarr}</p> */}
                       </div>
                       <div class="detail-section"><br />
                       </div>
@@ -194,7 +194,7 @@ class BusinessDashboard extends Component {
                       <div class="icon-section">
                         <i class="fa fa-bell" aria-hidden="true"></i><br />
                         <medium>Total Requests</medium><br />
-                        <p>{reqsarr}</p>
+                        {/* <p>{reqsarr}</p> */}
                       </div>
                       <div class="detail-section">
                         <br />
@@ -276,7 +276,7 @@ class BusinessDashboard extends Component {
                           </tr>
                         </thead>
                         <tbody>
-                          {row}
+                          {/* {row} */}
                         </tbody>
                       </Table>
                     </CardBody>

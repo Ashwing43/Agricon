@@ -100,9 +100,9 @@ class Dashboard extends Component {
       // userarr.push(<p>{countseller.toString()}</p>);
 
       // countarr.push(<p>{count.toString()}</p>);
-      // countarr.push(<ContractData contract="Land" method="getCropReqCount" />);
+      countarr.push(<ContractData contract="Farm" method="getCropReqCount" />);
       userarr.push(<ContractData contract="Farm" method="getBusinessCount" />);
-      // reqsarr.push(<ContractData contract="Land" method="getRequestsCount" />);
+      // reqsarr.push(<ContractData contract="Farm" method="getRequestsCount" />);
 
       var rowsArea = [];
       var rowsCity = [];
@@ -216,7 +216,7 @@ class Dashboard extends Component {
                       <div class="icon-section">
                         <i class="fa fa-landmark" aria-hidden="true"></i><br />
                         <medium>Registered Crop Requirement Count</medium><br />
-                        {/* <p>{countarr}</p> */}
+                        <p>{countarr}</p>
                       </div>
                       <div class="detail-section"><br />
                       </div>
