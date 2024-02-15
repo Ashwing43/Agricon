@@ -88,29 +88,29 @@ class BusinessDashboard extends Component {
       // countarr.push(<ContractData contract="Farm" method="getLandsCount" />);
       userarr.push(<ContractData contract="Farm" method="getFarmersCount" />);
 
-      var rowsArea = [];
-      var rowsCity = [];
-      var rowsState = [];
-      var rowsPrice = [];
-      var rowsPID = [];
-      var rowsSurvey = [];
+      var rowBusinessId = [];
+      var rowCropName = [];
+      var rowQuant = [];
+      var rowPricePerKg = [];
+      var rowDeliveryTime = [];
+      var rowTotalPrice = [];
+      var rowAdvPay = [];
 
 
-      // for (var i = 1; i < count + 1; i++) {
-      //   rowsArea.push(<ContractData contract="Farm" method="getArea" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
-      //   rowsCity.push(<ContractData contract="Farm" method="getCity" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
-      //   rowsState.push(<ContractData contract="Farm" method="getState" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
-      //   rowsPrice.push(<ContractData contract="Farm" method="getPrice" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
-      //   rowsPID.push(<ContractData contract="Farm" method="getPID" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
-      //   rowsSurvey.push(<ContractData contract="Farm" method="getSurveyNumber" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
-      // }
+      for (var i = 1; i < count + 1; i++) {
+        rowBusinessId.push(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowCropName.push(<ContractData contract="Farm" method="getCropRequirementCropName" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowQuant.push(<ContractData contract="Farm" method="getCropRequirementQuantity" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowPricePerKg.push(<ContractData contract="Farm" method="getCropRequirementPrice" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowDeliveryTime.push(<ContractData contract="Farm" method="getCropRequirementDelTime" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowTotalPrice.push(<ContractData contract="Farm" method="getCropRequirementTotalPrice" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowAdvPay.push(<ContractData contract="Farm" method="getCropRequirementAdvPayment" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+      }
 
-
-      // for (var i = 0; i < count; i++) {
-      //   row.push(<tr><td>{i + 1}</td><td>{rowsArea[i]}</td><td>{rowsCity[i]}</td><td>{rowsState[i]}</td><td>{rowsPrice[i]}</td><td>{rowsPID[i]}</td><td>{rowsSurvey[i]}</td>
-      //   </tr>)
-
-      // }
+      for (var i = 0; i < count; i++) {
+        if(rowBusinessId[i] == currentAddress) row.push(<tr><td>{i + 1}</td><td>{rowCropName[i]}</td><td>{rowQuant[i]}</td><td>{rowPricePerKg[i]}</td><td>{rowDeliveryTime[i]}</td><td>{rowTotalPrice[i]}</td><td>{rowAdvPay[i]}</td>
+        </tr>)
+      }
       countarr.push(row.length);
       console.log(row);
 
@@ -201,7 +201,7 @@ class BusinessDashboard extends Component {
                 <CardBody>
                   <div className="chart-area">
 
-                    <Button href="/Seller/AddLand" disabled={!this.state.verified} className="btn-fill" color="primary">
+                    <Button href="/Business/AddRequirement" disabled={!this.state.verified} className="btn-fill" color="primary">
                       Add Crop Requirement
                     </Button>
                   </div>

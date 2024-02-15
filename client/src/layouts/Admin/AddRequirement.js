@@ -8,7 +8,8 @@ import PerfectScrollbar from "perfect-scrollbar";
 import AdminNavbar from "../../components/Navbars/AdminNavbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
-import AddLand from "../../views/AddLand";
+// import AddLand from "../../views/AddLand";
+import AddRequirement from "../../views/AddRequirement"
 import routes from "../../routes";
 
 import logo from "../../assets/img/react-logo.png";
@@ -16,7 +17,7 @@ import { BackgroundColorContext } from "../../contexts/BackgroundColorContext";
 
 var ps;
 
-function Land(props) {
+function Farm(props) {
   const location = useLocation();
   const mainPanelRef = React.useRef(null);
   const [sidebarOpened, setsidebarOpened] = React.useState(
@@ -79,7 +80,7 @@ function Land(props) {
               routes={routes}
               logo={{
                 outterLink: "#",
-                text: "Land Registration",
+                text: "Contract Farming",
                 imgSrc: logo,
               }}
               toggleSidebar={toggleSidebar}
@@ -89,10 +90,10 @@ function Land(props) {
               />
               <Switch>
                 <Route
-                  path="/admin/AddLand"
-                  component={AddLand}
+                  path="/admin/AddRequirement"
+                  component={AddRequirement}
                 />
-                <Redirect from="*" to="/admin/AddLand" />
+                <Redirect from="*" to="/admin/AddRequirement" />
               </Switch>
 
             </div>
@@ -104,4 +105,4 @@ function Land(props) {
   );
 }
 
-export default Land;
+export default Farm;

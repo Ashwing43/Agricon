@@ -1,5 +1,5 @@
 import BusinessDashboard from "./views/BusinessDashboard";
-// import AddRequirement from "./views/AddRequirement";
+import AddRequirement from "./views/AddRequirement";
 // import ApproveRequest from "./views/ApproveRequest";
 // import BusinessProfile from "./views/BusinessProfile";
 // import viewRequest from "./views/viewRequest";
@@ -15,14 +15,14 @@ var routes = [
     component: BusinessDashboard,
     layout: "/Business",
   },
-  // {
-  //   path: "/AddRequirement",
-  //   name: "Add Requirement",
-  //   rtlName: "الرموز",
-  //   icon: "tim-icons icon-world",
-  //   component: AddRequirement,
-  //   layout: "/Business",
-  // },
+  {
+    path: "/AddRequirement",
+    name: "Add Requirement",
+    rtlName: "الرموز",
+    icon: "tim-icons icon-world",
+    component: AddRequirement,
+    layout: "/Business",
+  },
   // {
   //   path: "/BusinessProfile",
   //   name: "Business Profile",
