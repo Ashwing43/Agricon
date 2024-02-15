@@ -25,7 +25,6 @@ var verified;
 var row = [];
 var countarr = [];
 var userarr = [];
-var reqsarr = [];
 
 class BusinessDashboard extends Component {
   constructor(props) {
@@ -85,10 +84,9 @@ class BusinessDashboard extends Component {
       console.log(typeof (count));
       console.log(count);
       //this.setState({count:count});
-
+      // var requestCount = await this.state.LandInstance.methods.getRequestCount(currentAddress).call();
       // countarr.push(<ContractData contract="Farm" method="getLandsCount" />);
       userarr.push(<ContractData contract="Farm" method="getFarmersCount" />);
-      // reqsarr.push(<ContractData contract="Farm" method="getRequestsCount" />);
 
       var rowsArea = [];
       var rowsCity = [];
@@ -187,18 +185,6 @@ class BusinessDashboard extends Component {
                         <p>{countarr}</p>
                       </div>
                       <div class="detail-section"><br />
-                      </div>
-                    </div>
-                  </Col>
-                  <Col lg="4">
-                    <div class="dashbord dashbord-blue">
-                      <div class="icon-section">
-                        <i class="fa fa-bell" aria-hidden="true"></i><br />
-                        <medium>Total Requests</medium><br />
-                        {/* <p>{reqsarr}</p> */}
-                      </div>
-                      <div class="detail-section">
-                        <br />
                       </div>
                     </div>
                   </Col>
