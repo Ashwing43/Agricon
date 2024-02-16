@@ -79,11 +79,11 @@ class BusinessDashboard extends Component {
       console.log(registered);
       this.setState({ registered: registered });
 
-      var count = await this.state.FarmInstance.methods.CropReqMapCount().call();
+      var count = await this.state.FarmInstance.methods.getCropReqCount().call();
       count = parseInt(count);
       console.log(typeof (count));
       console.log(count);
-      //this.setState({count:count});
+      // this.setState({count:count});
       // var requestCount = await this.state.LandInstance.methods.getRequestCount(currentAddress).call();
       // countarr.push(<ContractData contract="Farm" method="getLandsCount" />);
       userarr.push(<ContractData contract="Farm" method="getFarmersCount" />);
@@ -97,8 +97,13 @@ class BusinessDashboard extends Component {
       var rowAdvPay = [];
 
 
-      for (var i = 1; i < count + 1; i++) {
-        rowBusinessId.push(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+      for (var i = 0; i < count; i++) {
+        // console.log(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        // rowBusinessId.push(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+       
+        const businessId = await this.state.FarmInstance.methods.getCropRequirementBusiness(i).call();
+         console.log(businessId);
+        rowBusinessId.push(businessId);
         rowCropName.push(<ContractData contract="Farm" method="getCropRequirementCropName" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         rowQuant.push(<ContractData contract="Farm" method="getCropRequirementQuantity" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         rowPricePerKg.push(<ContractData contract="Farm" method="getCropRequirementPrice" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
@@ -106,13 +111,19 @@ class BusinessDashboard extends Component {
         rowTotalPrice.push(<ContractData contract="Farm" method="getCropRequirementTotalPrice" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         rowAdvPay.push(<ContractData contract="Farm" method="getCropRequirementAdvPayment" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
       }
-
+      // console.log(rowBusinessId[0]);
+      var ind = 0;
       for (var i = 0; i < count; i++) {
-        if(rowBusinessId[i] == currentAddress) row.push(<tr><td>{i + 1}</td><td>{rowCropName[i]}</td><td>{rowQuant[i]}</td><td>{rowPricePerKg[i]}</td><td>{rowDeliveryTime[i]}</td><td>{rowTotalPrice[i]}</td><td>{rowAdvPay[i]}</td>
-        </tr>)
+        if(rowBusinessId[i].toLowerCase() === currentAddress.toLowerCase()) {
+        // console.log(rowBusinessId[i].toLowerCase());
+        // console.log(currentAddress.toLowerCase());
+        ind++;
+        row.push(<tr><td>{ind}</td><td>{rowCropName[i]}</td><td>{rowQuant[i]}</td><td>{rowPricePerKg[i]}</td><td>{rowDeliveryTime[i]}</td><td>{rowTotalPrice[i]}</td><td>{rowAdvPay[i]}</td>
+        </tr>
+        )}
       }
       countarr.push(row.length);
-      console.log(row);
+      // console.log(row);
 
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -276,7 +287,7 @@ class BusinessDashboard extends Component {
                           </tr>
                         </thead>
                         <tbody>
-                          {/* {row} */}
+                          {row}
                         </tbody>
                       </Table>
                     </CardBody>

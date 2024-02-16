@@ -295,9 +295,10 @@ contract Farm{
     }
 
     //below set of functions is for getting information about cropRequirement.
-    function getCropRequirementBusiness(uint256 i) public view returns(uint256){
-        return CropReqMap[i].id;
+    function getCropRequirementBusiness(uint256 i) public view returns(address){
+        return CropReqMap[i].business;
     }
+    
     function getCropRequirementCropName(uint256 i) public view returns(string memory){
         return CropReqMap[i].crop_name;
     }
