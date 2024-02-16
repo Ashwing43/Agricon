@@ -262,7 +262,7 @@ contract Farm{
     }
 
     function isVerified1(address _id) public view returns (bool) {
-        if(RegisteredAddressMapping[_id] == true) return true; 
+        if(Verification[_id] == true) return true; 
         else return false;
     }
 
@@ -274,8 +274,9 @@ contract Farm{
         rejection[walletID] = true;
     }
 
-    function isRejected(address walletID) public view isAdmin returns (bool rejected)  {
+    function isRejected(address walletID) public view returns (bool)  {
         if(rejection[walletID]) return true;
+        else return false;
     }
 
     function addCropRequirement (

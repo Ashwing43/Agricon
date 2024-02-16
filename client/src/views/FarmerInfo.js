@@ -105,31 +105,31 @@ class FarmerInfo extends Component {
 
 
             var farmersCount = await this.state.FarmInstance.methods.getFarmersCount().call();
-            console.log(farmersCount);
+            // console.log(farmersCount + " Ashiwn");
 
 
             var farmersMap = [];
             farmersMap = await this.state.FarmInstance.methods.getFarmers().call();
-            //console.log(buyersMap);
+            // console.log(farmersMap);
 
             var verified = await this.state.FarmInstance.methods.isAdmin1(currentAddress).call();
             //console.log(verified);
             this.setState({ verified: verified });
 
             for (let i = 0; i < farmersCount; i++) {
-                // var i =3;
+            //     // var i =3;
                 var farmer = await this.state.FarmInstance.methods.getFarmerDetails(farmersMap[i]).call();
-
+                // console.log(farmer);
                 var farmer_verify = await this.state.FarmInstance.methods.isVerified1(farmersMap[i]).call();
                 console.log(farmer_verify);
                 farmer.verified = farmer_verify;
 
                 var not_verify = await this.state.FarmInstance.methods.isRejected(farmersMap[i]).call();
                 console.log(not_verify);
-                farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[5]}</td><td>{farmer[4]}</td><td>{farmer[1]}</td><td>{farmer[6]}</td><td>{farmer[2]}</td><td><a href={`https://ipfs.io/ipfs/${farmer[3]}`} target="_blank">Click Here</a></td>
+                farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[1]}</td><td>{farmer[2]}</td><td>{farmer[3]}</td><td>{farmer[4]}</td><td><a href={`https://ipfs.io/ipfs/${farmer[5]}`} target="_blank">Click Here</a></td>
                     <td>{farmer.verified.toString()}</td>
                     <td>
-                        <Button onClick={this.verify(farmersMap[i])} disabled={farmer_verify || not_verify} className="button-vote">
+                        <Button onClick={this.verifyFarmer(farmersMap[i])} disabled={farmer_verify || not_verify} className="button-vote">
                             Verify
                         </Button>
                     </td>
@@ -139,7 +139,6 @@ class FarmerInfo extends Component {
                         </Button>
                     </td>
                 </tr>)
-
             }
 
         } catch (error) {
@@ -209,10 +208,10 @@ class FarmerInfo extends Component {
                                                     <th>City</th>
                                                     <th>Aadhar Number</th>
                                                     <th>Pan Number</th>
-                                                    <th>Land Card Document</th>
+                                                    <th>Land Document</th>
                                                     <th>Verification Status</th>
-                                                    <th>Verify Buyer</th>
-                                                    <th>Reject Buyer</th>
+                                                    <th>Verify Farmer</th>
+                                                    <th>Reject Farmer</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

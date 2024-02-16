@@ -198,7 +198,7 @@ class Admin1Dashboard extends Component {
                                     <CardBody>
                                         <div className="chart-area">
 
-                                            <Button href="/LI/SellerInfo" className="btn-fill" color="primary">
+                                            <Button href="/Admin1/BusinessInfo" className="btn-fill" color="primary">
                                                 Verify Businesses
                                             </Button>
                                         </div>

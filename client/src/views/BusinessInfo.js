@@ -9,39 +9,39 @@ import {
     Button, Card, CardBody, CardHeader, CardTitle, Col, Row, Table
 } from "reactstrap";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Land from "../artifacts/Land.json";
+import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
 import '../index.css';
 
 
 const drizzleOptions = {
-    contracts: [Land]
+    contracts: [Farm]
 }
 
 
-var sellersCount;
-var sellersMap = [];
-var sellerTable = [];
+var BusinessCount;
+var BusinessMap = [];
+var BusinessTable = [];
 
-class SellerInfo extends Component {
+class BusinessInfo extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            LandInstance: undefined,
+            FarmInstance: undefined,
             account: null,
             web3: null,
-            sellers: 0,
+            businesses: 0,
             verified: '',
             not_verified: '',
         }
     }
 
-    verifySeller = (item) => async () => {
+    verifyBusiness = (item) => async () => {
         //console.log("Hello");
         //console.log(item);
 
-        await this.state.LandInstance.methods.verifySeller(
+        await this.state.FarmInstance.methods.verify(
             item
         ).send({
             from: this.state.account,
@@ -53,9 +53,9 @@ class SellerInfo extends Component {
 
     }
 
-    NotverifySeller = (item) => async () => {
+    reject = (item) => async () => {
 
-        await this.state.LandInstance.methods.rejectSeller(
+        await this.state.FarmInstance.methods.reject(
             item
         ).send({
             from: this.state.account,
@@ -81,53 +81,53 @@ class SellerInfo extends Component {
             const currentAddress = await web3.currentProvider.selectedAddress;
             //console.log(currentAddress);
             const networkId = await web3.eth.net.getId();
-            const deployedNetwork = Land.networks[networkId];
+            const deployedNetwork = Farm.networks[networkId];
             const instance = new web3.eth.Contract(
-                Land.abi,
+                Farm.abi,
                 deployedNetwork && deployedNetwork.address,
             );
 
-            this.setState({ LandInstance: instance, web3: web3, account: accounts[0] });
+            this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
 
 
-            sellersCount = await this.state.LandInstance.methods.getSellersCount().call();
-            console.log(sellersCount);
+            BusinessCount = await this.state.FarmInstance.methods.getBusinessCount().call();
+            console.log(BusinessCount);
 
 
 
-            sellersMap = await this.state.LandInstance.methods.getSeller().call();
+            BusinessMap = await this.state.FarmInstance.methods.getBusinesses().call();
 
-            var verified = await this.state.LandInstance.methods.isLandInspector(currentAddress).call();
+            var verified = await this.state.FarmInstance.methods.isAdmin1(currentAddress).call();
             //console.log(verified);
             this.setState({ verified: verified });
 
 
-            for (let i = 0; i < sellersCount; i++) {
-                var seller = await this.state.LandInstance.methods.getSellerDetails(sellersMap[i]).call();
-                console.log(seller);
-                var seller_verify = await this.state.LandInstance.methods.isVerified(sellersMap[i]).call();
-                console.log(seller_verify);
-                seller.verified = seller_verify;
+            for (let i = 0; i < BusinessCount; i++) {
+                var business = await this.state.FarmInstance.methods.getBusinessDetails(BusinessMap[i]).call();
+                console.log(business);
+                var business_verify = await this.state.FarmInstance.methods.isVerified1(BusinessMap[i]).call();
+                console.log(business_verify);
+                business.verified = business_verify;
 
-                //seller.push(seller_verify);
-                var not_verify = await this.state.LandInstance.methods.isRejected(sellersMap[i]).call();
+                //business.push(business_verify);
+                var not_verify = await this.state.FarmInstance.methods.isRejected(BusinessMap[i]).call();
                 console.log(not_verify);
 
 
 
-                sellerTable.push(<tr><td>{i + 1}</td><td>{sellersMap[i]}</td><td>{seller[0]}</td><td>{seller[1]}</td><td>{seller[2]}</td><td>{seller[3]}</td><td>{seller[4]}</td><td><a href={`https://ipfs.io/ipfs/${seller[5]}`} target="_blank">Click Here</a></td>
-                    <td>{seller.verified.toString()}</td>
+                BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank">Click Here</a></td>
+                    <td>{business.verified.toString()}</td>
                     <td>
-                        <Button onClick={this.verifySeller(sellersMap[i])} disabled={seller_verify || not_verify} className="button-vote">
+                        <Button onClick={this.verifyBusiness(BusinessMap[i])} disabled={business_verify || not_verify} className="button-vote">
                             Verify
                         </Button>
                     </td>
                     <td>
-                        <Button onClick={this.NotverifySeller(sellersMap[i])} disabled={seller_verify || not_verify} className="btn btn-danger">
+                        <Button onClick={this.reject(BusinessMap[i])} disabled={business_verify || not_verify} className="btn btn-danger">
                             Reject
                         </Button>
                     </td></tr>)
-                console.log(seller[5]);
+                // console.log(business[5]);
 
 
             }
@@ -188,7 +188,7 @@ class SellerInfo extends Component {
                             <Col xs="12">
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle tag="h4">Sellers Info</CardTitle>
+                                        <CardTitle tag="h4">Business Info</CardTitle>
                                     </CardHeader>
                                     <CardBody>
                                         <Table sclassName="tablesorter" responsive color="black">
@@ -196,19 +196,19 @@ class SellerInfo extends Component {
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Account Address</th>
-                                                    <th>Name</th>
-                                                    <th>Age</th>
-                                                    <th>Aadhar Number</th>
-                                                    <th>Pan Number</th>
-                                                    <th>Owned Lands</th>
-                                                    <th>Aadhar Card Document</th>
+                                                    <th>Business Name</th>
+                                                    <th>City</th>
+                                                    <th>Reg. No/</th>
+                                                    <th>GST Number</th>
+                                                    <th>Email</th>
+                                                    <th>License</th>
                                                     <th>Verification Status</th>
-                                                    <th>Verify Seller</th>
-                                                    <th>Reject Seller</th>
+                                                    <th>Verify Business</th>
+                                                    <th>Reject Business</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {sellerTable}
+                                                {BusinessTable}
                                             </tbody>
 
                                         </Table>
@@ -226,4 +226,4 @@ class SellerInfo extends Component {
     }
 }
 
-export default SellerInfo;
+export default BusinessInfo;
