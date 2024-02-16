@@ -7,54 +7,54 @@ import {
     Button, Card, CardBody, CardHeader, CardTitle, Col, Row, Table
 } from "reactstrap";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Land from "../artifacts/Land.json";
+import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
 import '../index.css';
 
 
 const drizzleOptions = {
-    contracts: [Land]
+    contracts: [Farm]
 }
 
 // var buyers = 0;
 // var sellers = 0;
-var buyerTable = [];
+var farmerTable = [];
 var completed = true;
 
-function sendMail(email, name) {
-    // alert(typeof(name));
+// function sendMail(email, name) {
+//     // alert(typeof(name));
 
-    var tempParams = {
-        from_name: email,
-        to_name: name,
-        function: 'request and buy any land/property',
-    };
+//     var tempParams = {
+//         from_name: email,
+//         to_name: name,
+//         function: 'request and buy any land/property',
+//     };
 
-    window.emailjs.send('service_vrxa1ak', 'template_zhc8m9h', tempParams)
-        .then(function (res) {
-            alert("Mail sent successfully");
-        })
-}
+//     window.emailjs.send('service_vrxa1ak', 'template_zhc8m9h', tempParams)
+//         .then(function (res) {
+//             alert("Mail sent successfully");
+//         })
+// }
 
-class BuyerInfo extends Component {
+class FarmerInfo extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            LandInstance: undefined,
+            FarmInstance: undefined,
             account: null,
             web3: null,
-            buyers: 0,
+            farmers: 0,
             verified: '',
         }
     }
 
 
-    verifyBuyer = (item) => async () => {
+    verifyFarmer = (item) => async () => {
         //console.log("Hello");
         //console.log(item);
 
-        await this.state.LandInstance.methods.verifyBuyer(
+        await this.state.FarmInstance.methods.verify(
             item
         ).send({
             from: this.state.account,
@@ -66,14 +66,10 @@ class BuyerInfo extends Component {
 
     }
 
-    NotverifyBuyer = (item, email, name) => async () => {
-        // alert('Before mail');
-        sendMail(email, name);
-        // alert('After mail');
-
+    reject = (item) => async () => {
         await new Promise(resolve => setTimeout(resolve, 10000));
 
-        await this.state.LandInstance.methods.rejectBuyer(
+        await this.state.FarmInstance.methods.reject(
             item
         ).send({
             from: this.state.account,
@@ -99,46 +95,46 @@ class BuyerInfo extends Component {
             const currentAddress = await web3.currentProvider.selectedAddress;
             //console.log(currentAddress);
             const networkId = await web3.eth.net.getId();
-            const deployedNetwork = Land.networks[networkId];
+            const deployedNetwork = Farm.networks[networkId];
             const instance = new web3.eth.Contract(
-                Land.abi,
+                Farm.abi,
                 deployedNetwork && deployedNetwork.address,
             );
 
-            this.setState({ LandInstance: instance, web3: web3, account: accounts[0] });
+            this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
 
 
-            var buyersCount = await this.state.LandInstance.methods.getBuyersCount().call();
-            console.log(buyersCount);
+            var farmersCount = await this.state.FarmInstance.methods.getFarmersCount().call();
+            console.log(farmersCount);
 
 
-            var buyersMap = [];
-            buyersMap = await this.state.LandInstance.methods.getBuyer().call();
+            var farmersMap = [];
+            farmersMap = await this.state.FarmInstance.methods.getFarmers().call();
             //console.log(buyersMap);
 
-            var verified = await this.state.LandInstance.methods.isLandInspector(currentAddress).call();
+            var verified = await this.state.FarmInstance.methods.isAdmin1(currentAddress).call();
             //console.log(verified);
             this.setState({ verified: verified });
 
-            for (let i = 0; i < buyersCount; i++) {
+            for (let i = 0; i < farmersCount; i++) {
                 // var i =3;
-                var buyer = await this.state.LandInstance.methods.getBuyerDetails(buyersMap[i]).call();
+                var farmer = await this.state.FarmInstance.methods.getFarmerDetails(farmersMap[i]).call();
 
-                var buyer_verify = await this.state.LandInstance.methods.isVerified(buyersMap[i]).call();
-                console.log(buyer_verify);
-                buyer.verified = buyer_verify;
+                var farmer_verify = await this.state.FarmInstance.methods.isVerified1(farmersMap[i]).call();
+                console.log(farmer_verify);
+                farmer.verified = farmer_verify;
 
-                var not_verify = await this.state.LandInstance.methods.isRejected(buyersMap[i]).call();
+                var not_verify = await this.state.FarmInstance.methods.isRejected(farmersMap[i]).call();
                 console.log(not_verify);
-                buyerTable.push(<tr><td>{i + 1}</td><td>{buyersMap[i]}</td><td>{buyer[0]}</td><td>{buyer[5]}</td><td>{buyer[4]}</td><td>{buyer[1]}</td><td>{buyer[6]}</td><td>{buyer[2]}</td><td><a href={`https://ipfs.io/ipfs/${buyer[3]}`} target="_blank">Click Here</a></td>
-                    <td>{buyer.verified.toString()}</td>
+                farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[5]}</td><td>{farmer[4]}</td><td>{farmer[1]}</td><td>{farmer[6]}</td><td>{farmer[2]}</td><td><a href={`https://ipfs.io/ipfs/${farmer[3]}`} target="_blank">Click Here</a></td>
+                    <td>{farmer.verified.toString()}</td>
                     <td>
-                        <Button onClick={this.verifyBuyer(buyersMap[i])} disabled={buyer_verify || not_verify} className="button-vote">
+                        <Button onClick={this.verify(farmersMap[i])} disabled={farmer_verify || not_verify} className="button-vote">
                             Verify
                         </Button>
                     </td>
                     <td>
-                        <Button onClick={this.NotverifyBuyer(buyersMap[i], buyer[4], buyer[0])} disabled={buyer_verify || not_verify} className="btn btn-danger">
+                        <Button onClick={this.reject(farmersMap[i])} disabled={farmer_verify || not_verify} className="btn btn-danger">
                             Reject
                         </Button>
                     </td>
@@ -200,7 +196,7 @@ class BuyerInfo extends Component {
                             <Col xs="12">
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle tag="h5">Buyers Info</CardTitle>
+                                        <CardTitle tag="h5">Farmers Info</CardTitle>
                                     </CardHeader>
                                     <CardBody>
                                         <Table className="tablesorter" responsive color="black">
@@ -210,18 +206,17 @@ class BuyerInfo extends Component {
                                                     <th>Account Address</th>
                                                     <th>Name</th>
                                                     <th>Age</th>
-                                                    <th>Email</th>
                                                     <th>City</th>
                                                     <th>Aadhar Number</th>
                                                     <th>Pan Number</th>
-                                                    <th>Aadhar Card Document</th>
+                                                    <th>Land Card Document</th>
                                                     <th>Verification Status</th>
                                                     <th>Verify Buyer</th>
                                                     <th>Reject Buyer</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {buyerTable}
+                                                {farmerTable}
                                             </tbody>
 
                                         </Table>
@@ -237,4 +232,4 @@ class BuyerInfo extends Component {
     }
 }
 
-export default BuyerInfo;
+export default FarmerInfo;

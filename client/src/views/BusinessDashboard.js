@@ -42,12 +42,12 @@ class BusinessDashboard extends Component {
     }
   }
 
-  viewImage = (landId) => {
-    alert(landId);
-    this.props.history.push({
-      pathname: '/viewImage',
-    })
-  }
+  // viewImage = (landId) => {
+  //   alert(landId);
+  //   this.props.history.push({
+  //     pathname: '/viewImage',
+  //   })
+  // }
 
   componentDidMount = async () => {
     //For refreshing page only once

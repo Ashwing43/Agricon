@@ -24,8 +24,8 @@ const drizzleOptions = {
 
 var verified;
 var row = [];
-var buyerarr = [];
-var sellerarr = [];
+var farmerarr = [];
+var businessarr = [];
 var reqsarr = [];
 
 class Admin1Dashboard extends Component {
@@ -66,9 +66,9 @@ class Admin1Dashboard extends Component {
             var verified = await this.state.FarmInstance.methods.isAdmin1(currentAddress).call();
             this.setState({ verified: verified });
 
-            // sellerarr.push(<ContractData contract="Farm" method="getSellersCount" />);
-            // buyerarr.push(<ContractData contract="Farm" method="getBuyersCount" />);
-            // reqsarr.push(<ContractData contract="Farm" method="getRequestsCount" />);
+            farmerarr.push(<ContractData contract="Farm" method="getFarmersCount" />);
+            businessarr.push(<ContractData contract="Farm" method="getBusinessCount" />);
+            reqsarr.push(<ContractData contract="Farm" method="getTotalRequestCount" />);
 
 
         } catch (error) {
@@ -128,7 +128,7 @@ class Admin1Dashboard extends Component {
                                         <div class="icon-section">
                                             <i class="fa fa-users" aria-hidden="true"></i><br />
                                             <medium>Total Farmers</medium><br />
-                                            {/* <p> {buyerarr} </p> */}
+                                            <p> {farmerarr} </p>
                                         </div>
                                         <div class="detail-section"><br />
                                         </div>
@@ -139,7 +139,7 @@ class Admin1Dashboard extends Component {
                                         <div class="icon-section">
                                             <i class="fa fa-bell" aria-hidden="true"></i><br />
                                             <medium>Total Requests</medium><br />
-                                            {/* <p>{reqsarr}</p> */}
+                                            <p>{reqsarr}</p>
                                         </div>
                                         <div class="detail-section">
                                             <br />
@@ -151,7 +151,7 @@ class Admin1Dashboard extends Component {
                                         <div class="icon-section">
                                             <i class="fa fa-users" aria-hidden="true"></i><br />
                                             <medium>Total Business</medium><br />
-                                            {/* <p>{sellerarr}</p> */}
+                                            <p>{businessarr}</p>
                                         </div>
                                         <div class="detail-section"><br />
                                         </div>
@@ -168,7 +168,7 @@ class Admin1Dashboard extends Component {
                                     <CardBody>
                                         <div className="chart-area">
 
-                                            <Button href="/LI/BuyerInfo" className="btn-fill" color="primary">
+                                            <Button href="/Admin1/FarmerInfo" className="btn-fill" color="primary">
                                                 Verify Farmers
                                             </Button>
                                         </div>

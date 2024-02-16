@@ -96,7 +96,6 @@ class RegisterBusiness extends Component {
                 this.state.document,
                 this.state.email,
             )
-
                 .send({
                     from: this.state.account,
                     gas: 2100000
@@ -134,9 +133,8 @@ class RegisterBusiness extends Component {
             this.setState({ buffer2: Buffer(reader2.result) })
             console.log('buffer2', this.state.buffer2)
         }
-        console.log('caoture doc...')
+        console.log('capture doc...')
     }
-
 
     render() {
         if (!this.state.web3) {

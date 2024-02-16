@@ -78,17 +78,16 @@ contract Farm{
     
     // mapping(address => CropRequirement[]) public CropReqMap;//This map is for storing CropRequirements of particular company.
     CropRequirement[] public CropReqMap;
-    // mapping(uint256 => bool) public CropReqMapComplete;
+    mapping(address => bool) public rejection;
 
-    mapping(uint256 => address[]) public requestMapping;
-
-    
+    mapping(uint256 => address[]) public requestMapping;    
     
     uint256 public contractsCount = 5;
     uint256 public inspectorsCount;
     uint256 public farmersCount;
     uint256 public businessCount;
     uint256 public CropReqMapCount;
+    uint256 public totalRequest;
 
     function getBusinessCount() public view returns(uint256){
         return businessCount;
@@ -104,6 +103,14 @@ contract Farm{
     function getCropReqCount() public view returns(uint256){
         return CropReqMapCount;
     }
+
+    function getTotalRequestCount() public view returns(uint256){
+        return totalRequest;
+    }
+
+    // function getRequestCount(uint index) public view returns(uint256) {
+    //     return requestMapping[index].length;
+    // } 
 
     function add_admin(string memory _name, uint256 _age, string memory _designation) private{
         inspectorsCount++;
@@ -259,8 +266,16 @@ contract Farm{
         else return false;
     }
 
-    function Verify(address walletID) isAdmin public{
+    function verify(address walletID) isAdmin public{
         Verification[walletID] = true;
+    }
+
+    function reject(address walletID) isAdmin public {
+        rejection[walletID] = true;
+    }
+
+    function isRejected(address walletID) public view isAdmin returns (bool rejected)  {
+        if(rejection[walletID]) return true;
     }
 
     function addCropRequirement (
@@ -277,10 +292,6 @@ contract Farm{
             // CropReqMapComplete[id_temp] = false;
             CropReqMap.push(CropRequirement(id_temp, msg.sender, crop_name, quantity_in_kg, price_per_kg, block.timestamp+deliveryTime, false, _total, _advPayment));    
     }
-
-    
-
-    
 
     //below set of functions is for getting information about cropRequirement.
     function getCropRequirementBusiness(uint256 i) public view returns(uint256){
@@ -311,6 +322,7 @@ contract Farm{
 
     function requestContract(uint256 i) public isVerified{
         require(RegisteredFarmerMapping[msg.sender] == true);
+        totalRequest++;
         requestMapping[i].push(msg.sender);  
     }
 

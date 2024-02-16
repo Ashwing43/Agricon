@@ -32,7 +32,6 @@ ReactDOM.render(
           <Route path="/Admin1" render={(props) => <Admin1 {...props} />} />
           <Route path="/Business" render={(props) => <Business {...props} />} />
           <Route exact path='/Help' component={Help} /> 
-
         </Switch>
       </Router>
     </BackgroundColorWrapper>

@@ -1,7 +1,7 @@
 import Admin1Dashboard from "./views/Admin1Dashboard";
 // import ApproveContract from "./views/ApproveContract";
 // import BusinessInfo from "./views/BussinessInfo";
-// import FarmerInfo from "./views/FarmerInfo";
+import FarmerInfo from "./views/FarmerInfo";
 // import ContractInfo from "./views ContractInfo";
 
 var routes = [
@@ -22,14 +22,14 @@ var routes = [
   //   component: BusinessInfo,
   //   layout: "/Admin1",
   // },
-  // {
-  //   path: "/FarmerInfo",
-  //   name: "FarmerInfo",
-  //   rtlName: "لوحة القيادة",
-  //   icon: "tim-icons icon-single-02",
-  //   component: FarmerInfo,
-  //   layout: "/Admin1",
-  // },
+  {
+    path: "/FarmerInfo",
+    name: "FarmerInfo",
+    rtlName: "لوحة القيادة",
+    icon: "tim-icons icon-single-02",
+    component: FarmerInfo,
+    layout: "/Admin1",
+  },
   // {
   //   path: " ContractInfo",
   //   name: " ContractInfo",

@@ -1,3 +1,5 @@
+//This page will run once we create all admin panels and dashboard, so that he can mark farmers and businesses verified
+
 import React, { Component } from 'react';
 import FarmContract from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
@@ -73,7 +75,6 @@ class AddRequirement extends Component {
       console.log(registered);
       this.setState({ registered: registered });
 
-
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -115,7 +116,7 @@ class AddRequirement extends Component {
     // this.addimage();
     // this.addDoc();
     // alert('After add image')
-    // await new Promise(resolve => setTimeout(resolve, 15000));
+    await new Promise(resolve => setTimeout(resolve, 15000));
     if (this.state.crop_name == '' || this.state.price_per_kg == '' || this.state.quantity_in_kg == '' || this.state.deliveryTime == '' || this.state._total == '' || this.state._advPayment == '') {
       alert("All the fields are compulsory!");
     } else if ((!Number(this.state.price_per_kg)) || (!Number(this.state.quantity_in_kg)) || (!Number(this.state._total)) || (!Number(this.state._advPayment)) || (!Number(this.state.deliveryTime))) {

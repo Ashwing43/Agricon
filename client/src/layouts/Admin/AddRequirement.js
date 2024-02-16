@@ -90,10 +90,10 @@ function Farm(props) {
               />
               <Switch>
                 <Route
-                  path="/admin/AddRequirement"
+                  path="/Business/AddRequirement"
                   component={AddRequirement}
                 />
-                <Redirect from="*" to="/admin/AddRequirement" />
+                <Redirect from="*" to="/Business/AddRequirement" />
               </Switch>
 
             </div>
