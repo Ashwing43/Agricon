@@ -58,6 +58,7 @@ class RegisterBusiness extends Component {
             console.error(error);
         }
     };
+    
     addDoc = async () => {
            // alert('In add image')
            await ipfs.files.add(this.state.buffer2, (error, result) => {

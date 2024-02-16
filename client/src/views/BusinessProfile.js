@@ -224,7 +224,7 @@ class BusinessProfile extends Component {
                   <CardBody>
                     <Form>
                       {businessTable}
-                      <Button href="/Seller/updateSeller" className="btn-fill" disabled={!this.state.verified} color="primary">
+                      <Button href="/Business/updateBusiness" className="btn-fill" disabled={!this.state.verified} color="primary">
                         Edit Profile
                       </Button>
                     </Form>

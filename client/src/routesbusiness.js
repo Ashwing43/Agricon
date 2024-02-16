@@ -3,7 +3,7 @@ import AddRequirement from "./views/AddRequirement";
 // import ApproveRequest from "./views/ApproveRequest";
 import BusinessProfile from "./views/BusinessProfile";
 // import viewRequest from "./views/viewRequest";
-// import updateBusiness from "./views/updateBusiness";
+import updateBusiness from "./views/updateBusiness";
 import Help from "./Help";
 
 var routes = [
@@ -55,13 +55,13 @@ var routes = [
     component: Help,
     layout: "/Business",
   },
-  // {
-  //   path: "/updateBusiness",
-  //   name: "",
-  //   rtlName: "الرموز",
-  //   icon: "tim-icons",
-  //   component: updateBusiness,
-  //   layout: "/Business",
-  // },
+  {
+    path: "/updateBusiness",
+    name: "",
+    rtlName: "الرموز",
+    icon: "tim-icons",
+    component: updateBusiness,
+    layout: "/Business",
+  },
 ];
 export default routes;

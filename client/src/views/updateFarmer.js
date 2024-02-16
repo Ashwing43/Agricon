@@ -35,8 +35,6 @@ class updateBuyer extends Component {
       account: null,
       web3: null,
       address: '',
-      buyers: 0,
-      sellers: 0,
       name: '',
       age: '',
       city: '',
