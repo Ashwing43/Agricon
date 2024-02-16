@@ -11,17 +11,19 @@ import {
   Row
 } from "reactstrap";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Land from "../artifacts/Land.json";
+import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
 import "../index.css";
+import ipfs from '../ipfs';
+import { FormControl, FormFile } from 'react-bootstrap'
 
 
 const drizzleOptions = {
-  contracts: [Land]
+  contracts: [Farm]
 }
 
-var buyer;
-var buyerTable = [];
+var farmer;
+var farmerTable = [];
 var verification = [];
 
 class updateBuyer extends Component {
@@ -29,7 +31,7 @@ class updateBuyer extends Component {
     super(props)
 
     this.state = {
-      LandInstance: undefined,
+      FarmInstance: undefined,
       account: null,
       web3: null,
       address: '',
@@ -38,11 +40,15 @@ class updateBuyer extends Component {
       name: '',
       age: '',
       city: '',
-      email: '',
       aadharNumber: '',
       panNumber: '',
+      land_document: '',
+      isVerified: false,
+      buffer2: null,
       verified: '',
     }
+    this.captureDoc = this.captureDoc.bind(this);
+    this.addDoc = this.addDoc.bind(this);
   }
 
   componentDidMount = async () => {
@@ -61,18 +67,18 @@ class updateBuyer extends Component {
       const currentAddress = await web3.currentProvider.selectedAddress;
       console.log(currentAddress);
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = Land.networks[networkId];
+      const deployedNetwork = Farm.networks[networkId];
       const instance = new web3.eth.Contract(
-        Land.abi,
+        Farm.abi,
         deployedNetwork && deployedNetwork.address,
       );
 
-      this.setState({ LandInstance: instance, web3: web3, account: accounts[0] });
+      this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
       this.setState({ address: currentAddress });
-      var buyer_verify = await this.state.LandInstance.methods.isVerified(currentAddress).call();
+      var farmer_verify = await this.state.FarmInstance.methods.isVerified1(currentAddress).call();
 
-      var not_verify = await this.state.LandInstance.methods.isRejected(currentAddress).call();
-      if (buyer_verify) {
+      var not_verify = await this.state.FarmInstance.methods.isRejected(currentAddress).call();
+      if (farmer_verify) {
         verification.push(<p id="verified">Verified <i class="fas fa-user-check"></i></p>);
       } else if (not_verify) {
         verification.push(<p id="rejected">Rejected <i class="fas fa-user-times"></i></p>);
@@ -80,11 +86,11 @@ class updateBuyer extends Component {
         verification.push(<p id="unknown">Not Yet Verified <i class="fas fa-user-cog"></i></p>);
       }
 
-      buyer = await this.state.LandInstance.methods.getBuyerDetails(currentAddress).call();
-      console.log(buyer);
-      console.log(buyer[0]);
-      this.setState({ name: buyer[0], age: buyer[5], city: buyer[1], email: buyer[4], aadharNumber: buyer[6], panNumber: buyer[2] });
-      buyerTable.push(
+      farmer = await this.state.FarmInstance.methods.getFarmerDetails(currentAddress).call();
+      console.log(farmer);
+      console.log(farmer[0]);
+      this.setState({ name: farmer[0], age: farmer[1], city: farmer[2], aadharNumber: farmer[3], panNumber: farmer[4], land_document : farmer[5] });
+      farmerTable.push(
         <Row>
           <Col md="12">
             <FormGroup>
@@ -107,7 +113,34 @@ class updateBuyer extends Component {
       console.error(error);
     }
   };
-  updateBuyer = async () => {
+
+  addDoc = async () => {
+    // alert('In add image')
+    await ipfs.files.add(this.state.buffer2, (error, result) => {
+        if (error) {
+            alert(error)
+            return
+        }
+
+        alert(result[0].hash)
+        this.setState({ land_document: result[0].hash });
+        console.log('land_document:', this.state.land_document);
+    })
+  }
+
+  captureDoc(event) {
+    event.preventDefault()
+    const file2 = event.target.files[0]
+    const reader2 = new window.FileReader()
+    reader2.readAsArrayBuffer(file2)
+    reader2.onloadend = () => {
+        this.setState({ buffer2: Buffer(reader2.result) })
+        console.log('buffer2', this.state.buffer2)
+    }
+    console.log('caoture doc...')
+  }
+
+  updateFarmer = async () => {
     if (this.state.name === '' || this.state.age === '' || this.state.city === '' || this.state.email === '' || this.state.aadharNumber === '' || this.state.panNumber === '') {
       alert("All the fields are compulsory!");
     } else if (this.state.aadharNumber.length != 12) {
@@ -118,19 +151,19 @@ class updateBuyer extends Component {
       alert("Your age must be a number");
     }
     else {
-      await this.state.LandInstance.methods.updateBuyer(
+      await this.state.FarmInstance.methods.updateFarmer(
         this.state.name,
         this.state.age,
         this.state.city,
         this.state.aadharNumber,
-        this.state.email,
-        this.state.panNumber
+        this.state.panNumber,
+        this.state.land_document,
       )
         .send({
           from: this.state.address,
           gas: 2100000
         }).then(response => {
-          this.props.history.push("/admin/buyerProfile");
+          this.props.history.push("/admin/farmerProfile");
         });
 
       //Reload
@@ -142,19 +175,16 @@ class updateBuyer extends Component {
     this.setState({ name: event.target.value })
   )
   updateAge = event => (
-    this.setState({ age: event.target.value })
+      this.setState({ age: event.target.value })
   )
   updateCity = event => (
-    this.setState({ city: event.target.value })
-  )
-  updateEmail = event => (
-    this.setState({ email: event.target.value })
+      this.setState({ city: event.target.value })
   )
   updateAadhar = event => (
-    this.setState({ aadharNumber: event.target.value })
+      this.setState({ aadharNumber: event.target.value })
   )
   updatePan = event => (
-    this.setState({ panNumber: event.target.value })
+      this.setState({ panNumber: event.target.value })
   )
 
   render() {
@@ -179,13 +209,13 @@ class updateBuyer extends Component {
               <Col md="8">
                 <Card>
                   <CardHeader>
-                    <h5 className="title">Buyer Profile</h5>
+                    <h5 className="title">Farmer Profile</h5>
                     <h5 className="title">{verification}</h5>
 
                   </CardHeader>
                   <CardBody>
                     <Form>
-                      {buyerTable}
+                      {farmerTable}
                       <Row>
                         <Col md="12">
                           <FormGroup>
@@ -211,18 +241,6 @@ class updateBuyer extends Component {
                           </FormGroup>
                         </Col>
 
-                      </Row>
-                      <Row>
-                        <Col md="12">
-                          <FormGroup>
-                            <label>Email Address </label>
-                            <Input
-                              type="text"
-                              value={this.state.email}
-                              onChange={this.updateEmail}
-                            />
-                          </FormGroup>
-                        </Col>
                       </Row>
                       <Row>
                         <Col md="12">
@@ -260,10 +278,21 @@ class updateBuyer extends Component {
                           </FormGroup>
                         </Col>
                       </Row>
+                      <Row>
+                        <Col>
+                          <FormGroup>
+                                <label>Add your Land Document (PDF Format)</label>
+                                <FormFile
+                                    id="File2"
+                                    onChange={this.captureDoc}
+                                />
+                          </FormGroup>
+                        </Col>
+                      </Row>
                     </Form>
                   </CardBody>
                   <CardFooter>
-                    <Button onClick={this.updateBuyer} className="btn-fill" color="primary">
+                    <Button onClick={this.updateFarmer} className="btn-fill" color="primary">
                       Update
                     </Button>
                   </CardFooter>

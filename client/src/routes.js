@@ -2,7 +2,7 @@ import farmerProfile from "./views/farmerProfile";
 import Dashboard from "./views/Dashboard";
 // import viewRequests from "./views/viewRequests";
 // import MakePayment from "./views/MakePayment";
-// import updatebusiness from "./views/updatebusiness";
+import updateFarmer from "./views/updateFarmer";
 import Help from "./Help";
 
 var routes = [
@@ -47,13 +47,13 @@ var routes = [
     component: Help,
     layout: "/admin",
   },
-  // {
-  //   path: "/updatebusiness",
-  //   name: "",
-  //   rtlName: "الرموز",
-  //   icon: "tim-icons",
-  //   component: updatebusiness,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/updateFarmer",
+    name: "",
+    rtlName: "الرموز",
+    icon: "tim-icons",
+    component: updateFarmer,
+    layout: "/admin",
+  },
 ];
 export default routes;

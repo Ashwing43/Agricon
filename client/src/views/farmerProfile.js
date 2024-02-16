@@ -213,7 +213,7 @@ class farmerProfile extends Component {
                     <Form>
                       {farmerTable}
                     </Form>
-                    <Button href="/admin/updateBuyer" className="btn-fill" disabled={!this.state.verified} color="primary">
+                    <Button href="/admin/updateFarmer" className="btn-fill" disabled={!this.state.verified} color="primary">
                       Edit Profile
                     </Button>
                   </CardBody>
