@@ -1,4 +1,4 @@
-// import businessProfile from "./views/businessProfile";
+import farmerProfile from "./views/farmerProfile";
 import Dashboard from "./views/Dashboard";
 // import viewRequests from "./views/viewRequests";
 // import MakePayment from "./views/MakePayment";
@@ -14,14 +14,14 @@ var routes = [
     component: Dashboard,
     layout: "/admin",
   },
-  // {
-  //   path: "/businessProfile",
-  //   name: "Business Profile",
-  //   rtlName: "الرموز",
-  //   icon: "tim-icons icon-single-02",
-  //   component: businessProfile,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/farmerProfile",
+    name: "Farmer Profile",
+    rtlName: "الرموز",
+    icon: "tim-icons icon-single-02",
+    component: farmerProfile,
+    layout: "/admin",
+  },
   // {
   //   path: "/viewRequests",
   //   name: "View Requests",

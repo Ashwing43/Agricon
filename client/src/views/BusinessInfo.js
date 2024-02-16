@@ -89,11 +89,8 @@ class BusinessInfo extends Component {
 
             this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
 
-
             BusinessCount = await this.state.FarmInstance.methods.getBusinessCount().call();
             console.log(BusinessCount);
-
-
 
             BusinessMap = await this.state.FarmInstance.methods.getBusinesses().call();
 
@@ -113,8 +110,6 @@ class BusinessInfo extends Component {
                 var not_verify = await this.state.FarmInstance.methods.isRejected(BusinessMap[i]).call();
                 console.log(not_verify);
 
-
-
                 BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank">Click Here</a></td>
                     <td>{business.verified.toString()}</td>
                     <td>
@@ -128,11 +123,7 @@ class BusinessInfo extends Component {
                         </Button>
                     </td></tr>)
                 // console.log(business[5]);
-
-
             }
-
-
 
         } catch (error) {
             // Catch any errors for any of the above operations.
@@ -142,8 +133,6 @@ class BusinessInfo extends Component {
             console.error(error);
         }
     };
-
-
 
     render() {
         if (!this.state.web3) {

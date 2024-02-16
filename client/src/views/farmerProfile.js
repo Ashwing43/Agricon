@@ -11,33 +11,30 @@ import {
   Row
 } from "reactstrap";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Land from "../artifacts/Land.json";
+import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
-import '../index.css';
-
+import "../index.css";
 
 
 const drizzleOptions = {
-  contracts: [Land]
+  contracts: [Farm]
 }
 
-// var buyers = 0;
-// var sellers = 0;
-var seller;
-var sellerTable = [];
+var farmer;
+var farmerTable = [];
 var verification = [];
 
-class sellerProfile extends Component {
+class farmerProfile extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      LandInstance: undefined,
+      FarmInstance: undefined,
       account: null,
       web3: null,
       buyers: 0,
       sellers: 0,
-      verified: false,
+      verified: '',
     }
   }
 
@@ -57,20 +54,18 @@ class sellerProfile extends Component {
       const currentAddress = await web3.currentProvider.selectedAddress;
       console.log(currentAddress);
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = Land.networks[networkId];
+      const deployedNetwork = Farm.networks[networkId];
       const instance = new web3.eth.Contract(
-        Land.abi,
+        Farm.abi,
         deployedNetwork && deployedNetwork.address,
       );
 
-      this.setState({ LandInstance: instance, web3: web3, account: accounts[0] });
+      this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
 
-      var seller_verify = await this.state.LandInstance.methods.isVerified(currentAddress).call();
-      console.log(seller_verify);
-      this.setState({ verified: seller_verify })
-      var not_verify = await this.state.LandInstance.methods.isRejected(currentAddress).call();
-      console.log(not_verify);
-      if (seller_verify) {
+      var farmer_verify = await this.state.FarmInstance.methods.isVerified1(currentAddress).call();
+      this.setState({ verified: farmer_verify });
+      var not_verify = await this.state.FarmInstance.methods.isRejected(currentAddress).call();
+      if (farmer_verify) {
         verification.push(<p id="verified">Verified <i class="fas fa-user-check"></i></p>);
       } else if (not_verify) {
         verification.push(<p id="rejected">Rejected <i class="fas fa-user-times"></i></p>);
@@ -78,12 +73,11 @@ class sellerProfile extends Component {
         verification.push(<p id="unknown">Not Yet Verified <i class="fas fa-user-cog"></i></p>);
       }
 
-      seller = await this.state.LandInstance.methods.getSellerDetails(currentAddress).call();
-      console.log(seller);
-      console.log(seller[0]);
+      farmer = await this.state.FarmInstance.methods.getFarmerDetails(currentAddress).call();
+      // console.log(buyer);
+      // console.log(buyer[0]);
 
-      //sellerTable.push(<div><p>Name: {seller[0]}</p><p>Age: {seller[1]}</p><p>Aadhar Number: {seller[2]}</p><p>Pan Number: {seller[3]}</p><p>Owned Lands: {seller[4]}</p></div>);
-      sellerTable.push(<>
+      farmerTable.push(<>
         <Row>
           <Col md="12">
             <FormGroup>
@@ -103,7 +97,7 @@ class sellerProfile extends Component {
               <Input
                 disabled
                 type="text"
-                value={seller[0]}
+                value={farmer[0]}
               />
             </FormGroup>
           </Col>
@@ -116,11 +110,35 @@ class sellerProfile extends Component {
               <Input
                 disabled
                 type="text"
-                value={seller[1]}
+                value={farmer[1]}
               />
             </FormGroup>
           </Col>
 
+        </Row>
+        {/* <Row>
+          <Col md="12">
+            <FormGroup>
+              <label>Email Address </label>
+              <Input
+                disabled
+                type="text"
+                value={buyer[4]}
+              />
+            </FormGroup>
+          </Col>
+        </Row> */}
+        <Row>
+          <Col md="12">
+            <FormGroup>
+              <label>City</label>
+              <Input
+                disabled
+                type="text"
+                value={farmer[2]}
+              />
+            </FormGroup>
+          </Col>
         </Row>
         <Row>
           <Col md="12">
@@ -129,7 +147,7 @@ class sellerProfile extends Component {
               <Input
                 disabled
                 type="text"
-                value={seller[2]}
+                value={farmer[3]}
               />
             </FormGroup>
           </Col>
@@ -141,19 +159,7 @@ class sellerProfile extends Component {
               <Input
                 disabled
                 type="text"
-                value={seller[3]}
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="12">
-            <FormGroup>
-              <label>Owned Lands</label>
-              <Input
-                disabled
-                type="text"
-                value={seller[4]}
+                value={farmer[4]}
               />
             </FormGroup>
           </Col>
@@ -162,10 +168,11 @@ class sellerProfile extends Component {
           <Col md="12">
             <FormGroup>
               <label>Your Aadhar Document</label>
-              <div class="post-meta"><span class="timestamp"> <a href={`https://ipfs.io/ipfs/${seller[5]}`} target="_blank">Here</a></span></div>
+              <div class="post-meta"><span class="timestamp"> <a href={`https://ipfs.io/ipfs/${farmer[5]}`} target="_blank">Here</a></span></div>
             </FormGroup>
           </Col>
-        </Row></>);
+        </Row>
+      </>);
 
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -194,28 +201,21 @@ class sellerProfile extends Component {
       <div className="content">
         <DrizzleProvider options={drizzleOptions}>
           <LoadingContainer>
-
-            {/* <div >
-                    <h5>Seller Profile</h5>
-                
-                        {sellerTable}
-        
-                </div> */}
             <Row>
               <Col md="8">
                 <Card>
                   <CardHeader>
-                    <h5 className="title">Seller Profile</h5>
+                    <h5 className="title">Buyer Profile</h5>
                     <h5 className="title">{verification}</h5>
 
                   </CardHeader>
                   <CardBody>
                     <Form>
-                      {sellerTable}
-                      <Button href="/Seller/updateSeller" className="btn-fill" disabled={!this.state.verified} color="primary">
-                        Edit Profile
-                      </Button>
+                      {farmerTable}
                     </Form>
+                    <Button href="/admin/updateBuyer" className="btn-fill" disabled={!this.state.verified} color="primary">
+                      Edit Profile
+                    </Button>
                   </CardBody>
                   <CardFooter>
 
@@ -231,4 +231,4 @@ class sellerProfile extends Component {
   }
 }
 
-export default sellerProfile;
+export default farmerProfile;

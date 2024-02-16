@@ -11,30 +11,33 @@ import {
   Row
 } from "reactstrap";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Farm from "../artifacts/Land.json";
+import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
-import "../index.css";
+import '../index.css';
+
 
 
 const drizzleOptions = {
   contracts: [Farm]
 }
 
-var buyer;
-var buyerTable = [];
+// var buyers = 0;
+// var sellers = 0;
+var business;
+var businessTable = [];
 var verification = [];
 
-class buyerProfile extends Component {
+class BusinessProfile extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      LandInstance: undefined,
+      FarmInstance: undefined,
       account: null,
       web3: null,
-      buyers: 0,
-      sellers: 0,
-      verified: '',
+      farmers: 0,
+      businesses: 0,
+      verified: false,
     }
   }
 
@@ -54,18 +57,20 @@ class buyerProfile extends Component {
       const currentAddress = await web3.currentProvider.selectedAddress;
       console.log(currentAddress);
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = Land.networks[networkId];
+      const deployedNetwork = Farm.networks[networkId];
       const instance = new web3.eth.Contract(
-        Land.abi,
+        Farm.abi,
         deployedNetwork && deployedNetwork.address,
       );
 
-      this.setState({ LandInstance: instance, web3: web3, account: accounts[0] });
+      this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
 
-      var buyer_verify = await this.state.LandInstance.methods.isVerified(currentAddress).call();
-      this.setState({ verified: buyer_verify });
-      var not_verify = await this.state.LandInstance.methods.isRejected(currentAddress).call();
-      if (buyer_verify) {
+      var business_verify = await this.state.FarmInstance.methods.isVerified1(currentAddress).call();
+      console.log(business_verify);
+      this.setState({ verified: business_verify })
+      var not_verify = await this.state.FarmInstance.methods.isRejected(currentAddress).call();
+      console.log(not_verify);
+      if (business_verify) {
         verification.push(<p id="verified">Verified <i class="fas fa-user-check"></i></p>);
       } else if (not_verify) {
         verification.push(<p id="rejected">Rejected <i class="fas fa-user-times"></i></p>);
@@ -73,11 +78,12 @@ class buyerProfile extends Component {
         verification.push(<p id="unknown">Not Yet Verified <i class="fas fa-user-cog"></i></p>);
       }
 
-      buyer = await this.state.LandInstance.methods.getBuyerDetails(currentAddress).call();
-      console.log(buyer);
-      console.log(buyer[0]);
+      business = await this.state.FarmInstance.methods.getBusinessDetails(currentAddress).call();
+      // console.log(seller);
+      // console.log(seller[0]);
 
-      buyerTable.push(<>
+      //sellerTable.push(<div><p>Name: {seller[0]}</p><p>Age: {seller[1]}</p><p>Aadhar Number: {seller[2]}</p><p>Pan Number: {seller[3]}</p><p>Owned Lands: {seller[4]}</p></div>);
+      businessTable.push(<>
         <Row>
           <Col md="12">
             <FormGroup>
@@ -97,36 +103,11 @@ class buyerProfile extends Component {
               <Input
                 disabled
                 type="text"
-                value={buyer[0]}
+                value={business[0]}
               />
             </FormGroup>
           </Col>
 
-        </Row>
-        <Row>
-          <Col md="12">
-            <FormGroup>
-              <label>Age</label>
-              <Input
-                disabled
-                type="text"
-                value={buyer[5]}
-              />
-            </FormGroup>
-          </Col>
-
-        </Row>
-        <Row>
-          <Col md="12">
-            <FormGroup>
-              <label>Email Address </label>
-              <Input
-                disabled
-                type="text"
-                value={buyer[4]}
-              />
-            </FormGroup>
-          </Col>
         </Row>
         <Row>
           <Col md="12">
@@ -135,19 +116,20 @@ class buyerProfile extends Component {
               <Input
                 disabled
                 type="text"
-                value={buyer[1]}
+                value={business[1]}
               />
             </FormGroup>
           </Col>
+
         </Row>
         <Row>
           <Col md="12">
             <FormGroup>
-              <label>Aadhar Number</label>
+              <label>Reg. Number</label>
               <Input
                 disabled
                 type="text"
-                value={buyer[6]}
+                value={business[2]}
               />
             </FormGroup>
           </Col>
@@ -155,24 +137,47 @@ class buyerProfile extends Component {
         <Row>
           <Col md="12">
             <FormGroup>
-              <label>Pan Number</label>
+              <label>GST Number</label>
               <Input
                 disabled
                 type="text"
-                value={buyer[2]}
+                value={business[3]}
               />
+            </FormGroup>
+          </Col>
+        </Row>
+        {/* <Row>
+          <Col md="12">
+            <FormGroup>
+              <label>Owned Lands</label>
+              <Input
+                disabled
+                type="text"
+                value={seller[4]}
+              />
+            </FormGroup>
+          </Col>
+        </Row> */}
+        <Row>
+          <Col md="12">
+            <FormGroup>
+              <label>License</label>
+              <div class="post-meta"><span class="timestamp"> <a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank">Here</a></span></div>
             </FormGroup>
           </Col>
         </Row>
         <Row>
           <Col md="12">
             <FormGroup>
-              <label>Your Aadhar Document</label>
-              <div class="post-meta"><span class="timestamp"> <a href={`https://ipfs.io/ipfs/${buyer[3]}`} target="_blank">Here</a></span></div>
+              <label>Email</label>
+              <Input
+                disabled
+                type="text"
+                value={business[5]}
+              />
             </FormGroup>
           </Col>
-        </Row>
-      </>);
+        </Row></>);
 
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -201,21 +206,28 @@ class buyerProfile extends Component {
       <div className="content">
         <DrizzleProvider options={drizzleOptions}>
           <LoadingContainer>
+
+            {/* <div >
+                    <h5>Seller Profile</h5>
+                
+                        {sellerTable}
+        
+                </div> */}
             <Row>
               <Col md="8">
                 <Card>
                   <CardHeader>
-                    <h5 className="title">Buyer Profile</h5>
+                    <h5 className="title">Business Profile</h5>
                     <h5 className="title">{verification}</h5>
 
                   </CardHeader>
                   <CardBody>
                     <Form>
-                      {buyerTable}
+                      {businessTable}
+                      <Button href="/Seller/updateSeller" className="btn-fill" disabled={!this.state.verified} color="primary">
+                        Edit Profile
+                      </Button>
                     </Form>
-                    <Button href="/admin/updateBuyer" className="btn-fill" disabled={!this.state.verified} color="primary">
-                      Edit Profile
-                    </Button>
                   </CardBody>
                   <CardFooter>
 
@@ -231,4 +243,4 @@ class buyerProfile extends Component {
   }
 }
 
-export default buyerProfile;
+export default BusinessProfile;

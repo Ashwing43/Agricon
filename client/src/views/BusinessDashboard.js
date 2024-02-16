@@ -215,7 +215,7 @@ class BusinessDashboard extends Component {
                 </CardHeader>
                 <CardBody>
                   <div className="chart-area">
-                    <Button href="/seller/sellerProfile" className="btn-fill" color="primary">
+                    <Button href="/Business/BusinessProfile" className="btn-fill" color="primary">
                       View Profile
                     </Button>
                   </div>
