@@ -142,7 +142,7 @@ class Dashboard extends Component {
       //   </tr>)
       // }
       // console.log(row);
-
+      var rowIndex = [];
       var rowBusinessId = [];
       var rowCropName = [];
       var rowQuant = [];
@@ -157,7 +157,7 @@ class Dashboard extends Component {
       for (var i = 0; i < count; i++) {
         // console.log(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         // rowBusinessId.push(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
-       
+        rowIndex.push(i);
         const businessId = await this.state.FarmInstance.methods.getCropRequirementBusiness(i).call();
          console.log(businessId);
         rowBusinessId.push(businessId);
@@ -171,18 +171,22 @@ class Dashboard extends Component {
         rowDeliveryTime.push(<ContractData contract="Farm" method="getCropRequirementDelTime" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         rowTotalPrice.push(<ContractData contract="Farm" method="getCropRequirementTotalPrice" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         rowAdvPay.push(<ContractData contract="Farm" method="getCropRequirementAdvPayment" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
-        // rowStatus.push(<ContractData contract="Farm" method="getCropRequirementStatus" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         const status = await this.state.FarmInstance.methods.getCropRequirementStatus(i).call();
         rowStatus.push(status);
       }
-      // console.log(rowBusinessId[0]);
+
       var ind = 0;
       for (var i = 0; i < count; i++) {
+        // var isRequestedToContract = false;
+        var isRequestedToContract = await this.state.FarmInstance.methods.isRequested(rowIndex[i]).call();
         if(rowStatus[i] == false) {
-        // console.log(rowBusinessId[i].toLowerCase());
-        // console.log(currentAddress.toLowerCase());
         ind++;
         row.push(<tr><td>{ind}</td><td>{rowBusinessName[i]}</td><td>{rowCropName[i]}</td><td>{rowQuant[i]}</td><td>{rowPricePerKg[i]}</td><td>{rowDeliveryTime[i]}</td><td>{rowTotalPrice[i]}</td><td>{rowAdvPay[i]}</td>
+        <td>
+              <Button onClick={this.request(rowIndex[i])} disabled = {isRequestedToContract} className="btn btn-danger">
+                  Request
+              </Button>
+          </td>
         </tr>
         )}
       }
@@ -197,7 +201,18 @@ class Dashboard extends Component {
     }
   };
 
+  // request => (item) 
+  request = (item) => async () => {
 
+    await this.state.FarmInstance.methods.requestContract(
+        item
+    ).send({
+        from: this.state.account,
+        gas: 2100000
+    });
+
+    window.location.reload(false);
+}
 
   render() {
     if (!this.state.web3) {

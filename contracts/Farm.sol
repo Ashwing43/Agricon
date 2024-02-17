@@ -328,6 +328,16 @@ contract Farm{
         requestMapping[i].push(msg.sender);  
     }
 
+    function isRequested(uint256 index) public view returns (bool){
+        uint256 length = requestMapping[index].length;
+        for(uint256 i=0; i<length; i++){
+            if(requestMapping[index][i] == msg.sender){
+                return true;
+            }
+        }
+        return false;
+    }
+
     uint256 ContractsCount = 0;
 
     struct forExtension {
