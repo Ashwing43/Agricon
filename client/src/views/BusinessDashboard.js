@@ -51,10 +51,10 @@ class BusinessDashboard extends Component {
 
   componentDidMount = async () => {
     //For refreshing page only once
-    if (!window.location.hash) {
-      window.location = window.location + '#loaded';
-      window.location.reload();
-    }
+    // if (!window.location.hash) {
+    //   window.location = window.location + '#loaded';
+    //   window.location.reload();
+    // }
 
     try {
       //Get network provider and web3 instance
@@ -95,6 +95,7 @@ class BusinessDashboard extends Component {
       var rowDeliveryTime = [];
       var rowTotalPrice = [];
       var rowAdvPay = [];
+      var rowStatus = [];
 
 
       for (var i = 0; i < count; i++) {
@@ -110,11 +111,15 @@ class BusinessDashboard extends Component {
         rowDeliveryTime.push(<ContractData contract="Farm" method="getCropRequirementDelTime" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         rowTotalPrice.push(<ContractData contract="Farm" method="getCropRequirementTotalPrice" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         rowAdvPay.push(<ContractData contract="Farm" method="getCropRequirementAdvPayment" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        // rowStatus.push(<ContractData contract="Farm" method="getCropRequirementStatus" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        const status = await this.state.FarmInstance.methods.getCropRequirementStatus(i).call();
+        rowStatus.push(status);
       }
       // console.log(rowBusinessId[0]);
       var ind = 0;
       for (var i = 0; i < count; i++) {
-        if(rowBusinessId[i].toLowerCase() === currentAddress.toLowerCase()) {
+        console.log(rowStatus[i]);
+        if(rowBusinessId[i].toLowerCase() === currentAddress.toLowerCase() && rowStatus[i] == false) {
         // console.log(rowBusinessId[i].toLowerCase());
         // console.log(currentAddress.toLowerCase());
         ind++;

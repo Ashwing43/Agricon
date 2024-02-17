@@ -22,8 +22,8 @@ const drizzleOptions = {
 var row = [];
 var countarr = [];
 var userarr = [];
-var reqsarr = [];
-var landOwner = [];
+// var reqsarr = [];
+// var landOwner = [];
 // var requested = false;
 
 class Dashboard extends Component {
@@ -104,12 +104,12 @@ class Dashboard extends Component {
       userarr.push(<ContractData contract="Farm" method="getBusinessCount" />);
       // reqsarr.push(<ContractData contract="Farm" method="getRequestsCount" />);
 
-      var rowsArea = [];
-      var rowsCity = [];
-      var rowsState = [];
-      var rowsPrice = [];
-      var rowsPID = [];
-      var rowsSurvey = [];
+      // var rowsArea = [];
+      // var rowsCity = [];
+      // var rowsState = [];
+      // var rowsPrice = [];
+      // var rowsPID = [];
+      // var rowsSurvey = [];
 
 
       // var dict = {}
@@ -141,9 +141,51 @@ class Dashboard extends Component {
       //     </td>
       //   </tr>)
       // }
-      console.log(row);
+      // console.log(row);
+
+      var rowBusinessId = [];
+      var rowCropName = [];
+      var rowQuant = [];
+      var rowPricePerKg = [];
+      var rowDeliveryTime = [];
+      var rowTotalPrice = [];
+      var rowAdvPay = [];
+      var rowStatus = [];
+      var rowBusinessName = [];
 
 
+      for (var i = 0; i < count; i++) {
+        // console.log(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        // rowBusinessId.push(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+       
+        const businessId = await this.state.FarmInstance.methods.getCropRequirementBusiness(i).call();
+         console.log(businessId);
+        rowBusinessId.push(businessId);
+        var business;
+        business = await this.state.FarmInstance.methods.getBusinessDetails(businessId).call();
+        rowBusinessName.push(business[0]);
+        rowCropName.push(<ContractData contract="Farm" method="getCropRequirementCropName" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowQuant.push(<ContractData contract="Farm" method="getCropRequirementQuantity" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowPricePerKg.push(<ContractData contract="Farm" method="getCropRequirementPrice" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        //We have to take care of delivery time, as it is in seconds.
+        rowDeliveryTime.push(<ContractData contract="Farm" method="getCropRequirementDelTime" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowTotalPrice.push(<ContractData contract="Farm" method="getCropRequirementTotalPrice" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        rowAdvPay.push(<ContractData contract="Farm" method="getCropRequirementAdvPayment" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        // rowStatus.push(<ContractData contract="Farm" method="getCropRequirementStatus" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
+        const status = await this.state.FarmInstance.methods.getCropRequirementStatus(i).call();
+        rowStatus.push(status);
+      }
+      // console.log(rowBusinessId[0]);
+      var ind = 0;
+      for (var i = 0; i < count; i++) {
+        if(rowStatus[i] == false) {
+        // console.log(rowBusinessId[i].toLowerCase());
+        // console.log(currentAddress.toLowerCase());
+        ind++;
+        row.push(<tr><td>{ind}</td><td>{rowBusinessName[i]}</td><td>{rowCropName[i]}</td><td>{rowQuant[i]}</td><td>{rowPricePerKg[i]}</td><td>{rowDeliveryTime[i]}</td><td>{rowTotalPrice[i]}</td><td>{rowAdvPay[i]}</td>
+        </tr>
+        )}
+      }
 
 
     } catch (error) {
@@ -309,7 +351,7 @@ class Dashboard extends Component {
                           </tr>
                         </thead>
                         <tbody>
-                          {/* {row} */}
+                          {row}
                         </tbody>
                       </Table>
                     </CardBody>
