@@ -101,9 +101,9 @@ class BusinessDashboard extends Component {
       for (var i = 0; i < count; i++) {
         // console.log(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         // rowBusinessId.push(<ContractData contract="Farm" method="getCropRequirementBusiness" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
-       
+
         const businessId = await this.state.FarmInstance.methods.getCropRequirementBusiness(i).call();
-         console.log(businessId);
+        console.log(businessId);
         rowBusinessId.push(businessId);
         rowCropName.push(<ContractData contract="Farm" method="getCropRequirementCropName" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
         rowQuant.push(<ContractData contract="Farm" method="getCropRequirementQuantity" methodArgs={[i, { from: "0xa42A8B478E5e010609725C2d5A8fe6c0C4A939cB" }]} />);
@@ -119,13 +119,14 @@ class BusinessDashboard extends Component {
       var ind = 0;
       for (var i = 0; i < count; i++) {
         console.log(rowStatus[i]);
-        if(rowBusinessId[i].toLowerCase() === currentAddress.toLowerCase() && rowStatus[i] == false) {
-        // console.log(rowBusinessId[i].toLowerCase());
-        // console.log(currentAddress.toLowerCase());
-        ind++;
-        row.push(<tr><td>{ind}</td><td>{rowCropName[i]}</td><td>{rowQuant[i]}</td><td>{rowPricePerKg[i]}</td><td>{rowDeliveryTime[i]}</td><td>{rowTotalPrice[i]}</td><td>{rowAdvPay[i]}</td>
-        </tr>
-        )}
+        if (rowBusinessId[i].toLowerCase() === currentAddress.toLowerCase() && rowStatus[i] == false) {
+          // console.log(rowBusinessId[i].toLowerCase());
+          // console.log(currentAddress.toLowerCase());
+          ind++;
+          row.push(<tr><td>{ind}</td><td>{rowCropName[i]}</td><td>{rowQuant[i]}</td><td>{rowPricePerKg[i]}</td><td>{rowDeliveryTime[i]}</td><td>{rowTotalPrice[i]}</td><td>{rowAdvPay[i]}</td>
+          </tr>
+          )
+        }
       }
       countarr.push(row.length);
       // console.log(row);
@@ -259,10 +260,10 @@ class BusinessDashboard extends Component {
                   <h5 className="title">View Signed Contracts!</h5>
                 </CardHeader>
                 <CardBody>
-                <div className="chart-area">
-                  <Button href="/Seller/viewImage" className="btn-fill" color="primary">
-                    View contracts
-                  </Button>
+                  <div className="chart-area">
+                    <Button href="/Seller/viewImage" className="btn-fill" color="primary">
+                      View contracts
+                    </Button>
                   </div>
                 </CardBody>
               </Card>
@@ -282,16 +283,17 @@ class BusinessDashboard extends Component {
                       <Table className="tablesorter" responsive color="black">
                         <thead className="text-primary">
                           <tr>
-                          <th>#</th>
-                          <th>Crop name</th>
-                          <th>Quantity(kg)</th>
-                          <th>Price(kg)</th>
-                          <th>Delivery Time</th>
-                          <th>Total Price</th>
-                          <th>Advanced Payment</th>
+                            <th>#</th>
+                            <th>Crop name</th>
+                            <th>Quantity(kg)</th>
+                            <th>Price(kg)</th>
+                            <th>Delivery Time</th>
+                            <th>Total Price</th>
+                            <th>Advanced Payment</th>
                           </tr>
                         </thead>
                         <tbody>
+                          {console.log("Ashwin")}
                           {row}
                         </tbody>
                       </Table>
