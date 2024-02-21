@@ -80,7 +80,8 @@ contract Farm{
     CropRequirement[] public CropReqMap;
     mapping(address => bool) public rejection;
 
-    mapping(uint256 => address) public requestMapping;    
+    mapping(uint256 => address) public requestMapping;  
+    mapping(uint256 => bool) public requested;  
     
     uint256 public contractsCount = 5;
     uint256 public inspectorsCount;
@@ -291,6 +292,7 @@ contract Farm{
             CropReqMapCount++;
             uint id_temp = CropReqMap.length + 1;
             // CropReqMapComplete[id_temp] = false;
+            requested[CropReqMap.length] == false;
             CropReqMap.push(CropRequirement(id_temp, msg.sender, crop_name, quantity_in_kg, price_per_kg, block.timestamp+deliveryTime, false, _total, _advPayment));    
     }
 
@@ -323,19 +325,15 @@ contract Farm{
     //end
 
     function requestContract(uint256 i) public isVerified{
-        require(RegisteredFarmerMapping[msg.sender] == true);
+        require(RegisteredFarmerMapping[msg.sender] == true && requested[i] == false);
         totalRequest++;
         requestMapping[i] = msg.sender;  
+        requested[i] = true;
     }
 
     function isRequested(uint256 index) public view returns (bool){
-        // uint256 length = requestMapping[index].length;
-        // for(uint256 i=0; i<length; i++){
-        if(requestMapping[index] == msg.sender){
-            return true;
-        }
-        // }
-        else return false;
+        if(requested[index] == false) return false;
+        if(requested[index] == true) return true;
     }
 
     uint256 ContractsCount = 0;

@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Farm from "../artifacts/Farm.json";
-// import "../card.css";
+import "../card.css";
 import getWeb3 from "../getWeb3";
 
 
@@ -21,10 +21,10 @@ const drizzleOptions = {
 var countBusiness;
 
 class Dashboard extends Component {
-  
+
   constructor(props) {
     super(props);
-    
+
     this.state = {
       // Initialize loading state
       loading: true,
@@ -41,6 +41,7 @@ class Dashboard extends Component {
     try {
       const web3 = await getWeb3();
       const accounts = await web3.eth.getAccounts();
+      console.log(accounts);
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = Farm.networks[networkId];
       const instance = new web3.eth.Contract(
@@ -86,30 +87,34 @@ class Dashboard extends Component {
         rowAdvPay.push(await this.state.FarmInstance.methods.getCropRequirementAdvPayment(i).call());
         rowStatus.push(await this.state.FarmInstance.methods.getCropRequirementStatus(i).call());
         rowRequest.push(await this.state.FarmInstance.methods.isRequested(i).call());
+        console.log(rowRequest[i]);
       }
 
       var ind = 0;
       var row = [];
       for (var i = 0; i < count; i++) {
         ind++;
-        row.push(
-          <tr key={i}>
-            <td>{ind}</td>
-            <td>{rowBusinessName[i]}</td>
-            <td>{rowCropName[i]}</td>
-            <td>{rowQuant[i]}</td>
-            <td>{rowPricePerKg[i]}</td>
-            <td>{rowDeliveryTime[i]}</td>
-            <td>{rowTotalPrice[i]}</td>
-            <td>{rowAdvPay[i]}</td>
-            <td>
-              <Button onClick={this.request(i)} disabled = {!rowRequest[i]} className="btn btn-danger">
-                Request
-              </Button>
-            </td>
-          </tr>
-        );
-        console.log(rowRequest[i]);
+        // console.log(rowStatus[i]);
+        if (!rowStatus[i]) {
+          row.push(
+            <tr key={i}>
+              <td>{ind}</td>
+              <td>{rowBusinessName[i]}</td>
+              <td>{rowCropName[i]}</td>
+              <td>{rowQuant[i]}</td>
+              <td>{rowPricePerKg[i]}</td>
+              <td>{rowDeliveryTime[i]}</td>
+              <td>{rowTotalPrice[i]}</td>
+              <td>{rowAdvPay[i]}</td>
+              <td>
+                <Button onClick={this.request(i)} disabled={rowRequest[i]} className="btn btn-danger">
+                  Request
+                </Button>
+              </td>
+            </tr>
+          );
+        }
+        // console.log(rowRequest[i]);
       }
 
       this.setState({ row: row, loading: false }); // Update row and loading state

@@ -1,26 +1,18 @@
-import {
-    ContractData, LoadingContainer
-} from '@drizzle/react-components';
+import { ContractData, LoadingContainer } from '@drizzle/react-components';
 import { DrizzleProvider } from '@drizzle/react-plugin';
 import React, { Component } from 'react';
 import { Spinner } from 'react-bootstrap';
 // reactstrap components
-import {
-    Button, Card, CardBody, CardHeader, Col, Row
-} from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Farm from "../artifacts/Farm.json";
-// import "../card.css";
+import "../card.css";
 import getWeb3 from "../getWeb3";
 import '../index.css';
-
-
-
 
 const drizzleOptions = {
     contracts: [Farm]
 }
-
 
 var verified;
 var row = [];
@@ -69,7 +61,6 @@ class Admin1Dashboard extends Component {
             farmerarr.push(<ContractData contract="Farm" method="getFarmersCount" />);
             businessarr.push(<ContractData contract="Farm" method="getBusinessCount" />);
             reqsarr.push(<ContractData contract="Farm" method="getTotalRequestCount" />);
-
 
         } catch (error) {
             // Catch any errors for any of the above operations.

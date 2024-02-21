@@ -131,7 +131,7 @@ class RegisterFarmer extends Component {
             this.setState({ buffer2: Buffer(reader2.result) })
             console.log('buffer2', this.state.buffer2)
         }
-        console.log('caoture doc...')
+        console.log('capture doc...')
     }
 
     render() {

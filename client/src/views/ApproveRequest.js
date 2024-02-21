@@ -9,12 +9,12 @@ import {
     Button, Card, CardBody, CardHeader, CardTitle, Table
 } from "reactstrap";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Land from "../artifacts/Land.json";
+import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
 import '../index.css';
 
 const drizzleOptions = {
-    contracts: [Land]
+    contracts: [Farm]
 }
 
 var requestTable = [];
@@ -24,7 +24,7 @@ class ApproveRequest extends Component {
         super(props)
 
         this.state = {
-            LandInstance: undefined,
+            FarmInstance: undefined,
             account: null,
             web3: null,
             registered: '',
@@ -33,7 +33,7 @@ class ApproveRequest extends Component {
     }
     approveRequest = (reqId) => async () => {
 
-        await this.state.LandInstance.methods.approveRequest(
+        await this.state.FarmInstance.methods.approveRequest(
             reqId
         ).send({
             from: this.state.account,
@@ -58,34 +58,38 @@ class ApproveRequest extends Component {
             const accounts = await web3.eth.getAccounts();
 
             const networkId = await web3.eth.net.getId();
-            const deployedNetwork = Land.networks[networkId];
+            const deployedNetwork = Farm.networks[networkId];
             const instance = new web3.eth.Contract(
-                Land.abi,
+                Farm.abi,
                 deployedNetwork && deployedNetwork.address,
             );
 
-            this.setState({ LandInstance: instance, web3: web3, account: accounts[0] });
+            this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
 
             const currentAddress = await web3.currentProvider.selectedAddress;
             console.log(currentAddress);
-            var registered = await this.state.LandInstance.methods.isSeller(currentAddress).call();
+            var registered = await this.state.FarmInstance.methods.isBusiness(currentAddress).call();
             console.log(registered);
             this.setState({ registered: registered });
-            var requestsCount = await this.state.LandInstance.methods.getRequestsCount().call();
-            console.log(requestsCount);
+            var requestsCount = 0;
+            // var requestsCount = await this.state.FarmInstance.methods.getRequestsCount().call();
+            // console.log(requestsCount);
 
             for (let i = 1; i < requestsCount + 1; i++) {
-                var request = await this.state.LandInstance.methods.getRequestDetails(i).call();
-                var approved = await this.state.LandInstance.methods.isApproved(i).call();
-                console.log(approved);
-                if (currentAddress == request[0].toLowerCase()) {
-                    requestTable.push(<tr><td>{i}</td><td>{request[1]}</td><td>{request[2]}</td><td>{request[3].toString()}</td>
-                        <td>
-                            <Button onClick={this.approveRequest(i)} disabled={approved} className="button-vote">
-                                Approve Request
-                            </Button>
-                        </td></tr>)
-                }
+                // var request = await this.state.LandInstance.methods.getRequestDetails(i).call();
+                // var approved = await this.state.LandInstance.methods.isApproved(i).call();
+                // console.log(approved);
+
+                // disabled={approved}
+
+                // if (currentAddress == request[0].toLowerCase()) {
+                //     requestTable.push(<tr><td>{i}</td><td>{request[1]}</td><td>{request[2]}</td><td>{request[3].toString()}</td>
+                //         <td>
+                //             <Button onClick={this.approveRequest(i)}  className="button-vote">
+                //                 Approve Request
+                //             </Button>
+                //         </td></tr>)
+                // }
                 // console.log(request[1]);
             }
             // console.log(requestTable);
@@ -147,7 +151,7 @@ class ApproveRequest extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {requestTable}
+                                        {/* {requestTable} */}
                                     </tbody>
                                 </Table>
                             </CardBody>

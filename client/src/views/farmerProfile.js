@@ -205,7 +205,7 @@ class farmerProfile extends Component {
               <Col md="8">
                 <Card>
                   <CardHeader>
-                    <h5 className="title">Buyer Profile</h5>
+                    <h5 className="title">Farmer Profile</h5>
                     <h5 className="title">{verification}</h5>
 
                   </CardHeader>

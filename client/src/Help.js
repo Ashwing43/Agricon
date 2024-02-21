@@ -19,7 +19,7 @@ const data = {
         },
         {
             title: "Where can I find this project source code?",
-            content: <p>You can find it in this Github Repository <a href="https://github.com/" >here.</a></p>,
+            content: <p>You can find it in this Github Repository <a href="https://github.com/Ashwing43/Agricon" target="_blank" rel="noreferrer">here.</a></p>,
         },
         {
             title: "What do I register for?",

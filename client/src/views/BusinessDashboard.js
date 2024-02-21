@@ -6,6 +6,7 @@ import { Button, Card, CardBody, CardHeader, CardTitle, Col, Row, Table } from "
 import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
 import "../index.css";
+import "../card.css"
 
 const drizzleOptions = {
   contracts: [Farm]
@@ -183,7 +184,7 @@ class BusinessDashboard extends Component {
                 </CardHeader>
                 <CardBody>
                   <div className="chart-area">
-                    <Button href="/Seller/ApproveRequest" disabled={!this.state.verified} className="btn-fill" color="primary">
+                    <Button href="/Business/ApproveRequest" disabled={!this.state.verified} className="btn-fill" color="primary">
                       View all Requests
                     </Button>
                   </div>
@@ -268,7 +269,7 @@ export default BusinessDashboard;
 //   Button, Card, CardBody, CardHeader, CardTitle, Col, Row, Table
 // } from "reactstrap";
 // import Farm from "../artifacts/Farm.json";
-// // import "../card.css";
+// import "../card.css";
 // import getWeb3 from "../getWeb3";
 // import "../index.css";
 
