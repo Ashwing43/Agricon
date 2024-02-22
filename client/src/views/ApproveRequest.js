@@ -17,7 +17,7 @@ const drizzleOptions = {
     contracts: [Farm]
 }
 
-var requestTable = [];
+
 
 class ApproveRequest extends Component {
     constructor(props) {
@@ -27,8 +27,14 @@ class ApproveRequest extends Component {
             FarmInstance: undefined,
             account: null,
             web3: null,
-            registered: '',
             approved: '',
+            flag: null,
+            verified: '',
+            registered: '',
+            count: 0,
+            id: '',
+            row: [],
+            val: 0,
         }
     }
     approveRequest = (reqId) => async () => {
@@ -37,11 +43,47 @@ class ApproveRequest extends Component {
             reqId
         ).send({
             from: this.state.account,
+            gas: 2100000,
+            value: this.state.value
+        });
+        //Reload
+        window.location.reload(false);
+
+    }
+
+    rejectRequest = (reqId) => async () => {
+
+        await this.state.FarmInstance.methods.approveRequest(
+            reqId
+        ).send({
+            from: this.state.account,
+            gas: 2100000,
+            value: this.state.value
+        });
+        //Reload
+        window.location.reload(false);
+
+    }
+
+    getRequirement = (reqId) => async () => {
+
+        await this.state.FarmInstance.methods.getCropRequirementCropName(
+            reqId
+        ).send({
+            from: this.state.account,
             gas: 2100000
         });
         //Reload
         window.location.reload(false);
 
+    }
+
+    getFarmer = (address) => async () => {
+        await this.state.FarmInstance.methods.getFarmerDetails(address).send({
+            from: this.state.account,
+            gas: 2100000,
+
+        })
     }
 
     componentDidMount = async () => {
@@ -54,9 +96,7 @@ class ApproveRequest extends Component {
         try {
             //Get network provider and web3 instance
             const web3 = await getWeb3();
-
             const accounts = await web3.eth.getAccounts();
-
             const networkId = await web3.eth.net.getId();
             const deployedNetwork = Farm.networks[networkId];
             const instance = new web3.eth.Contract(
@@ -64,34 +104,58 @@ class ApproveRequest extends Component {
                 deployedNetwork && deployedNetwork.address,
             );
 
+            const currentAddress = await web3.currentProvider.selectedAddress;
             this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
 
-            const currentAddress = await web3.currentProvider.selectedAddress;
-            console.log(currentAddress);
             var registered = await this.state.FarmInstance.methods.isBusiness(currentAddress).call();
-            console.log(registered);
             this.setState({ registered: registered });
-            var requestsCount = 0;
+
+            var count = await this.state.FarmInstance.methods.getCropReqCount().call();
+            this.setState({ count: parseInt(count) });
+
             // var requestsCount = await this.state.FarmInstance.methods.getRequestsCount().call();
             // console.log(requestsCount);
+            const row = [];
+            var ind = 0;
+            for (let i = 0; i < count; i++) {
+                ind++;
+                const businessId = await this.state.FarmInstance.methods.getCropRequirementBusiness(i).call();
+                const status = await this.state.FarmInstance.methods.getCropRequirementStatus(i).call();
+                const isRequested = await this.state.FarmInstance.methods.isRequested(i).call();
 
-            for (let i = 1; i < requestsCount + 1; i++) {
-                // var request = await this.state.LandInstance.methods.getRequestDetails(i).call();
-                // var approved = await this.state.LandInstance.methods.isApproved(i).call();
-                // console.log(approved);
-
-                // disabled={approved}
-
-                // if (currentAddress == request[0].toLowerCase()) {
-                //     requestTable.push(<tr><td>{i}</td><td>{request[1]}</td><td>{request[2]}</td><td>{request[3].toString()}</td>
-                //         <td>
-                //             <Button onClick={this.approveRequest(i)}  className="button-vote">
-                //                 Approve Request
-                //             </Button>
-                //         </td></tr>)
-                // }
-                // console.log(request[1]);
+                if (businessId.toLowerCase() === currentAddress.toLowerCase() && !status && isRequested) {
+                    const farmerId = await this.state.FarmInstance.methods.requestMapping(i).call();
+                    const farmerDetails = await this.state.FarmInstance.methods.getFarmerDetails(farmerId).call();
+                    const deliveryTime = await this.state.FarmInstance.methods.getCropRequirementDelTime(i).call();
+                    const totalPrice = await this.state.FarmInstance.methods.getCropRequirementTotalPrice(i).call();
+                    const advPayment = await this.state.FarmInstance.methods.getCropRequirementAdvPayment(i).call();
+                    row.push(<tr key={i}>
+                        <td>
+                            {ind}
+                        </td>
+                        <td>
+                            <Button onClick={this.getRequirement(i)} className="btn btn-danger">
+                                Crop Requirement
+                            </Button>
+                        </td>
+                        <td>
+                            <Button onClick={this.getFarmer(farmerId)} className="btn btn-danger">
+                                Farmer Details
+                            </Button>
+                        </td>
+                        <td>
+                            <Button onClick={this.approveRequest(i)} className="btn btn-danger">
+                                Approve
+                            </Button>
+                            <a> </a>
+                            <Button onClick={this.rejectRequest(i)} className="btn btn-danger">
+                                Reject
+                            </Button>
+                        </td>
+                    </tr>);
+                }
             }
+            this.setState({ row: row });
             // console.log(requestTable);
 
         } catch (error) {
@@ -144,14 +208,13 @@ class ApproveRequest extends Component {
                                     <thead className="text-primary">
                                         <tr>
                                             <th>#</th>
-                                            <th>Buyer ID</th>
-                                            <th>Land ID</th>
-                                            <th>Request Status</th>
+                                            <th>Crop Requirements</th>
+                                            <th>Farmer ID</th>
                                             <th>Approve Request</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* {requestTable} */}
+                                        {this.state.row}
                                     </tbody>
                                 </Table>
                             </CardBody>

@@ -163,6 +163,10 @@ class BusinessProfile extends Component {
             <FormGroup>
               <label>License</label>
               <div class="post-meta"><span class="timestamp"> <a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank">Here</a></span></div>
+                                                          {/* <a href={`http://192.168.0.137:8080/ipfs/${business[4]}`} </div> */}
+                                                                                      {/* ^ */}
+                                                                                      {/* | */}
+                                                                        {/* here you have to put host address for your ipfs server */}
             </FormGroup>
           </Col>
         </Row>

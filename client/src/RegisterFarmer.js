@@ -28,6 +28,32 @@ class RegisterFarmer extends Component {
         this.addDoc = this.addDoc.bind(this);
     }
 
+    addDoc = () => {
+        // alert('In add image')
+        // event.preventDefault()
+        ipfs.add(this.state.buffer2, (error, result) => {
+            console.log('Ipfs result', result)
+            if (error) {
+                // alert(error)
+                return
+            }
+            // alert(result[0].hash)
+            this.setState({ land_document: result[0].hash });
+            console.log('land_document:', result);
+        })
+    }
+    
+    captureDoc = (event) => {
+        event.preventDefault()
+        console.log("capturing the doc")
+        const file2 = event.target.files[0]
+        const reader2 = new window.FileReader()
+        reader2.readAsArrayBuffer(file2)
+        reader2.onloadend = () => {
+            this.setState({ buffer2: Buffer(reader2.result) })
+        }
+    }
+
     componentDidMount = async () => {
         //For refreshing page only once
         if (!window.location.hash) {
@@ -59,20 +85,6 @@ class RegisterFarmer extends Component {
             console.error(error);
         }
     };
-
-    addDoc = async () => {
-        // alert('In add image')
-        await ipfs.files.add(this.state.buffer2, (error, result) => {
-            if (error) {
-                alert(error)
-                return
-            }
-
-            alert(result[0].hash)
-            this.setState({ land_document: result[0].hash });
-            console.log('land_document:', this.state.land_document);
-        })
-    }
 
     RegisterFarmer = async () => {
         this.addDoc();
@@ -122,17 +134,7 @@ class RegisterFarmer extends Component {
         this.setState({ panNumber: event.target.value })
     )
 
-    captureDoc(event) {
-        event.preventDefault()
-        const file2 = event.target.files[0]
-        const reader2 = new window.FileReader()
-        reader2.readAsArrayBuffer(file2)
-        reader2.onloadend = () => {
-            this.setState({ buffer2: Buffer(reader2.result) })
-            console.log('buffer2', this.state.buffer2)
-        }
-        console.log('capture doc...')
-    }
+    
 
     render() {
         if (!this.state.web3) {

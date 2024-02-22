@@ -101,7 +101,7 @@ class BusinessInfo extends Component {
 
             for (let i = 0; i < BusinessCount; i++) {
                 var business = await this.state.FarmInstance.methods.getBusinessDetails(BusinessMap[i]).call();
-                console.log(business);
+                console.log(business[4]);
                 var business_verify = await this.state.FarmInstance.methods.isVerified1(BusinessMap[i]).call();
                 console.log(business_verify);
                 business.verified = business_verify;
@@ -111,6 +111,11 @@ class BusinessInfo extends Component {
                 console.log(not_verify);
 
                 BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank">Click Here</a></td>
+                                                                                                                                                                                              {/* <a href={`http://192.168.0.137:8080/ipfs/${business[4]}`} </div> */}
+                                                                                                                                                                                                                      {/* ^ */}
+                                                                                                                                                                                                                      {/* | */}
+                                                                                                                                                                                                      {/* here you have to put host address for your ipfs server */}
+                                                                                                                                                        
                     <td>{business.verified.toString()}</td>
                     <td>
                         <Button onClick={this.verifyBusiness(BusinessMap[i])} disabled={business_verify || not_verify} className="button-vote">
