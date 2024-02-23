@@ -87,7 +87,7 @@ class Dashboard extends Component {
         rowAdvPay.push(await this.state.FarmInstance.methods.getCropRequirementAdvPayment(i).call());
         rowStatus.push(await this.state.FarmInstance.methods.getCropRequirementStatus(i).call());
         rowRequest.push(await this.state.FarmInstance.methods.isRequested(i).call());
-        console.log(rowRequest[i]);
+        // console.log(rowRequest[i]);
       }
 
       var ind = 0;

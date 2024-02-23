@@ -35,6 +35,7 @@ class farmerProfile extends Component {
       buyers: 0,
       sellers: 0,
       verified: '',
+      farmerTable : []
     }
   }
 
@@ -177,6 +178,7 @@ class farmerProfile extends Component {
           </Col>
         </Row>
       </>);
+      this.setState({farmerTable : farmerTable});
 
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -211,11 +213,10 @@ class farmerProfile extends Component {
                   <CardHeader>
                     <h5 className="title">Farmer Profile</h5>
                     <h5 className="title">{verification}</h5>
-
                   </CardHeader>
                   <CardBody>
                     <Form>
-                      {farmerTable}
+                      {this.state.farmerTable}
                     </Form>
                     <Button href="/admin/updateFarmer" className="btn-fill" disabled={!this.state.verified} color="primary">
                       Edit Profile

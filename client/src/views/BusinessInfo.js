@@ -34,6 +34,7 @@ class BusinessInfo extends Component {
             businesses: 0,
             verified: '',
             not_verified: '',
+            BusinessTable : []
         }
     }
 
@@ -128,7 +129,8 @@ class BusinessInfo extends Component {
                         </Button>
                     </td></tr>)
                 // console.log(business[5]);
-            }
+            };
+            this.setState({ BusinessTable : BusinessTable });
 
         } catch (error) {
             // Catch any errors for any of the above operations.
@@ -202,7 +204,7 @@ class BusinessInfo extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {BusinessTable}
+                                                {this.state.BusinessTable}
                                             </tbody>
 
                                         </Table>

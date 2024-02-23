@@ -46,6 +46,7 @@ class FarmerInfo extends Component {
             web3: null,
             farmers: 0,
             verified: '',
+            farmerTable : []
         }
     }
 
@@ -144,7 +145,8 @@ class FarmerInfo extends Component {
                         </Button>
                     </td>
                 </tr>)
-            }
+            };
+            this.setState({ farmerTable : farmerTable });
 
         } catch (error) {
             // Catch any errors for any of the above operations.
@@ -220,7 +222,7 @@ class FarmerInfo extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {farmerTable}
+                                                {this.state.farmerTable}
                                             </tbody>
 
                                         </Table>

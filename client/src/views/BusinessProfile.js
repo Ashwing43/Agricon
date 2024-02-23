@@ -38,6 +38,7 @@ class BusinessProfile extends Component {
       farmers: 0,
       businesses: 0,
       verified: false,
+      businessTable : []
     }
   }
 
@@ -182,6 +183,7 @@ class BusinessProfile extends Component {
             </FormGroup>
           </Col>
         </Row></>);
+        this.setState({businessTable : businessTable});
 
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -227,7 +229,7 @@ class BusinessProfile extends Component {
                   </CardHeader>
                   <CardBody>
                     <Form>
-                      {businessTable}
+                      {this.state.businessTable}
                       <Button href="/Business/updateBusiness" className="btn-fill" disabled={!this.state.verified} color="primary">
                         Edit Profile
                       </Button>
