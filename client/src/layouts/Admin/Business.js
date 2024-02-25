@@ -83,7 +83,7 @@ function Business(props) {
         return routes[i].name;
       }
     }
-    return "Brand";
+    return "Business Dashboard";
   };
   return (
     <BackgroundColorContext.Consumer>
@@ -94,7 +94,7 @@ function Business(props) {
               routes={routes}
               logo={{
                 outterLink: "#",
-                text: "Land Registration",
+                text: "Agricon",
                 imgSrc: logo,
               }}
               toggleSidebar={toggleSidebar}
@@ -105,12 +105,12 @@ function Business(props) {
                 toggleSidebar={toggleSidebar}
                 sidebarOpened={sidebarOpened}
               />
+              {/* {console.log(getBrandText(location.pathname))} */}
               <Switch>
                 {getRoutes(routes)}
                 <Redirect from="*" to="/Business/BusinessDashboard" />
               </Switch>
               <Footer fluid />
-
             </div>
           </div>
           {/* <FixedPlugin bgColor={color} handleBgClick={changeColor} /> */}

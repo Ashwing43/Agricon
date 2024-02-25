@@ -71,8 +71,6 @@ class Admin1Dashboard extends Component {
         }
     };
 
-
-
     render() {
         if (!this.state.web3) {
             return (

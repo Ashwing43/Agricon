@@ -13,9 +13,6 @@ import Land from "../artifacts/Land.json";
 import getWeb3 from "../getWeb3";
 import '../index.css';
 
-
-
-
 const drizzleOptions = {
   contracts: [Land]
 }
@@ -32,6 +29,7 @@ class ApproveRequest extends Component {
       web3: null,
       approved: '',
       verified: '',
+      requestTable: []
     }
   }
   landTransfer = (landId, newOwner) => async () => {
@@ -101,6 +99,7 @@ class ApproveRequest extends Component {
           </td></tr>)
         // console.log(request[1]);
       }
+      this.setState({ requestTable: requestTable })
 
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -160,7 +159,7 @@ class ApproveRequest extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {requestTable}
+                    {this.state.requestTable}
                   </tbody>
                 </Table>
               </CardBody>
@@ -169,7 +168,6 @@ class ApproveRequest extends Component {
         </DrizzleProvider>
       </div>
     );
-
   }
 }
 

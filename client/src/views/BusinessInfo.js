@@ -68,10 +68,11 @@ class BusinessInfo extends Component {
 
     componentDidMount = async () => {
         //For refreshing page only once
-        // if (!window.location.hash) {
-        //     window.location = window.location + '#loaded';
-        //     window.location.reload();
-        // }
+        if (!window.location.hash) {
+            window.location = window.location + '#loaded';
+            window.location.reload();
+        }
+        console.log(window.location.hash);
 
         try {
             //Get network provider and web3 instance
@@ -112,7 +113,7 @@ class BusinessInfo extends Component {
                 console.log(not_verify);
 
                 BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank">Click Here</a></td>
-                                                                                                                                                                                              {/* <a href={`http://192.168.0.137:8080/ipfs/${business[4]}`} </div> */}
+                {/* BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`http://192.168.163.32:8080/ipfs/${business[4]}`} target="_blank">Click Here</a></td> */}
                                                                                                                                                                                                                       {/* ^ */}
                                                                                                                                                                                                                       {/* | */}
                                                                                                                                                                                                       {/* here you have to put host address for your ipfs server */}

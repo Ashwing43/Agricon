@@ -17,8 +17,6 @@ const drizzleOptions = {
     contracts: [Farm]
 }
 
-
-
 class ApproveRequest extends Component {
     constructor(props) {
         super(props)

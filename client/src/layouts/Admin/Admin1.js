@@ -84,7 +84,7 @@ function Admin1(props) {
         return routes[i].name;
       }
     }
-    return "Brand";
+    return "Admin Dashboard";
   };
   return (
     <BackgroundColorContext.Consumer>
@@ -95,7 +95,7 @@ function Admin1(props) {
               routes={routes}
               logo={{
                 outterLink: "#",
-                text: "Land Registration",
+                text: "Agricon",
                 imgSrc: logo,
               }}
               toggleSidebar={toggleSidebar}

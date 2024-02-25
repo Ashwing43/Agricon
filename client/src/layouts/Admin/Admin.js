@@ -84,7 +84,7 @@ function Admin(props) {
         return routes[i].name;
       }
     }
-    return "Brand";
+    return "Farmer Dashboard";
   };
 
   return (
@@ -103,7 +103,7 @@ function Admin(props) {
             />
             <div className="main-panel" ref={mainPanelRef} data={color}>
             <AdminNavbar
-                brandText={getBrandText(location.pathname)}
+                brandText={getBrandText(location.pathname)} 
                 toggleSidebar={toggleSidebar}
                 sidebarOpened={sidebarOpened}
               />

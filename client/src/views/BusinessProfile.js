@@ -83,7 +83,6 @@ class BusinessProfile extends Component {
       // console.log(seller);
       // console.log(seller[0]);
 
-      //sellerTable.push(<div><p>Name: {seller[0]}</p><p>Age: {seller[1]}</p><p>Aadhar Number: {seller[2]}</p><p>Pan Number: {seller[3]}</p><p>Owned Lands: {seller[4]}</p></div>);
       businessTable.push(<>
         <Row>
           <Col md="12">
@@ -147,24 +146,12 @@ class BusinessProfile extends Component {
             </FormGroup>
           </Col>
         </Row>
-        {/* <Row>
-          <Col md="12">
-            <FormGroup>
-              <label>Owned Lands</label>
-              <Input
-                disabled
-                type="text"
-                value={seller[4]}
-              />
-            </FormGroup>
-          </Col>
-        </Row> */}
         <Row>
           <Col md="12">
             <FormGroup>
               <label>License</label>
               <div class="post-meta"><span class="timestamp"> <a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank">Here</a></span></div>
-                                                          {/* <a href={`http://192.168.0.137:8080/ipfs/${business[4]}`} </div> */}
+              {/* <div class="post-meta"><span class="timestamp"> <a href={`http://192.168.163.32:8080/ipfs/${business[4]}`} target="_blank">Here</a></span></div> */}
                                                                                       {/* ^ */}
                                                                                       {/* | */}
                                                                         {/* here you have to put host address for your ipfs server */}
@@ -212,13 +199,6 @@ class BusinessProfile extends Component {
       <div className="content">
         <DrizzleProvider options={drizzleOptions}>
           <LoadingContainer>
-
-            {/* <div >
-                    <h5>Seller Profile</h5>
-                
-                        {sellerTable}
-        
-                </div> */}
             <Row>
               <Col md="8">
                 <Card>
