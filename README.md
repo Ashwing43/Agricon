@@ -29,7 +29,7 @@ Addressing Food Security Challenges: AgriCon emerges as a solution to global foo
   Start the frontend: npm start
   
 # Contributors:
-  @github.com/PankajMore02
+  Pankaj More
   Ashwin Gadve
   Tejas Date
   Dheeraj Nale
