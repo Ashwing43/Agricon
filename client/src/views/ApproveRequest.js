@@ -35,14 +35,14 @@ class ApproveRequest extends Component {
             val: 0,
         }
     }
-    approveRequest = (reqId) => async () => {
-
-        await this.state.FarmInstance.methods.approveRequest(
-            reqId
+    approveRequest = (farmer_Id, reqId, adv_Payment) => async () => {
+        this.state.val = adv_Payment;
+        await this.state.FarmInstance.methods.signContract(
+            farmer_Id, reqId
         ).send({
             from: this.state.account,
             gas: 2100000,
-            value: this.state.value
+            value: this.state.val
         });
         //Reload
         window.location.reload(false);
@@ -124,25 +124,57 @@ class ApproveRequest extends Component {
                 if (businessId.toLowerCase() === currentAddress.toLowerCase() && !status && isRequested) {
                     const farmerId = await this.state.FarmInstance.methods.requestMapping(i).call();
                     const farmerDetails = await this.state.FarmInstance.methods.getFarmerDetails(farmerId).call();
-                    const deliveryTime = await this.state.FarmInstance.methods.getCropRequirementDelTime(i).call();
-                    const totalPrice = await this.state.FarmInstance.methods.getCropRequirementTotalPrice(i).call();
+                    // const deliveryTime = await this.state.FarmInstance.methods.getCropRequirementDelTime(i).call();
+                    // const totalPrice = await this.state.FarmInstance.methods.getCropRequirementTotalPrice(i).call();
                     const advPayment = await this.state.FarmInstance.methods.getCropRequirementAdvPayment(i).call();
-                    row.push(<tr key={i}>
+                    row.push(
+                    <tr key={i}>
                         <td>
                             {ind}
                         </td>
                         <td>
-                            <Button onClick={this.getRequirement(i)} className="btn btn-danger">
-                                Crop Requirement
-                            </Button>
+                            <tr>
+                                Crop name: {await this.state.FarmInstance.methods.getCropRequirementCropName(i).call()}
+                            </tr>
+                            <tr>
+                                Quantity: {await this.state.FarmInstance.methods.getCropRequirementQuantity(i).call()} kg
+                            </tr>
+                            <tr>
+                                Price/kg: {await this.state.FarmInstance.methods.getCropRequirementPrice(i).call()}
+                            </tr>
+                            <tr>
+                                Delivery Time: {await this.state.FarmInstance.methods.getCropRequirementDelTime(i).call()}
+                            </tr>
+                            <tr>
+                                Total Price: {await this.state.FarmInstance.methods.getCropRequirementTotalPrice(i).call()}                            
+                            </tr>
+                            <tr>
+                                Adv. Payment: {advPayment}                            
+                            </tr>
+                        </td>
+
+                        <td>
+                            <tr>
+                                Name: {farmerDetails[0]}
+                            </tr>
+                            <tr>
+                                Age: {farmerDetails[1]}
+                            </tr>
+                            <tr>
+                                city: {farmerDetails[2]}
+                            </tr>
+                            <tr>
+                                Adhar: {farmerDetails[3]}
+                            </tr>
+                            <tr>
+                                Pan: {farmerDetails[4]}
+                            </tr>
+                            <tr>
+                                <a href={`http://192.168.0.118:8080/ipfs/${farmerDetails[5]}`} target="_blank">Land Doc</a>
+                            </tr>
                         </td>
                         <td>
-                            <Button onClick={this.getFarmer(farmerId)} className="btn btn-danger">
-                                Farmer Details
-                            </Button>
-                        </td>
-                        <td>
-                            <Button onClick={this.approveRequest(i)} className="btn btn-danger">
+                            <Button onClick={this.approveRequest(farmerId, i, advPayment)} className="btn btn-danger">
                                 Approve
                             </Button>
                             <a> </a>

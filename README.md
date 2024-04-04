@@ -8,9 +8,9 @@ AgriCon is a complete blockchain-based platform that aims to revolutionize the c
 **Digital Marketplace:** Facilitating transactions through a digital marketplace, connecting farmers with potential buyers.
 
 # Technologies Used:
-**Frontend:** HTML, CSS, JavaScript, React JS\
+**Frontend:** HTML, CSS, JavaScript, React JS, web3js\
 **Backend:** Solidity\
-**Blockchain Platform:** Ethereum or Ganache
+**Blockchain Platform:** Ethereum or truffle-Ganache
 
 # Objective:
 The primary objective behind the implementation of AgriCon is to provide a secure platform for companies and farmers to create immutable contracts with each other. This aims to reduce losses for both entities in the physical ecosystem by introducing transparency and trust through blockchain technology.

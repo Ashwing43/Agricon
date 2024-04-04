@@ -45,19 +45,19 @@ module.exports = {
     //127.0.0.1:8545
 
 
-    development: {
-      host: "127.0.0.1",     // Localhost (default: none)
-      port: 8545,            // Standard Ethereum port (default: none)
-      network_id: "*",       // Any network (default: none)
-    },
-
     // development: {
-    //   host: "192.168.163.32",     // Localhost (default: none)
-    //   //Add your ipv4 address
+    //   host: "127.0.0.1",    // Localhost (default: none)
     //   port: 8545,            // Standard Ethereum port (default: none)
-    //   //May need to change port to 7545
     //   network_id: "*",       // Any network (default: none)
     // },
+
+    development: {
+      host: "192.168.0.118",     // Localhost (default: none)
+      //Add your ipv4 address
+      port: 8545,            // Standard Ethereum port (default: none)
+      //May need to change port to 7545
+      network_id: "*",       // Any network (default: none)
+    },
     
     // Another network with more advanced options...
     // advanced: {
