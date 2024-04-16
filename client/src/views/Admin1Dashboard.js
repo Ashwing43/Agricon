@@ -167,13 +167,13 @@ class Admin1Dashboard extends Component {
                             <Col lg="4">
                                 <Card>
                                     <CardHeader>
-                                        <h5 className="title">Contract Extension Requests</h5>
+                                        <h5 className="title">Contracts Signed</h5>
                                     </CardHeader>
                                     <CardBody>
                                         <div className="chart-area">
 
-                                            <Button href="/LI/TransactionInfo" className="btn-fill" color="primary">
-                                                Approve Extension Requests
+                                            <Button href="/Admin1/ContractInfo" className="btn-fill" color="primary">
+                                                View Contracts
                                             </Button>
                                         </div>
                                     </CardBody>

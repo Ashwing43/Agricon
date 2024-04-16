@@ -23,12 +23,12 @@ var verified;
 var row = [];
 
 
-class ViewContractsFarmer extends Component {
+class ContractInfo extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      LandInstance: undefined,
+      FarmInstance: undefined,
       account: null,
       web3: null,
       flag: null,
@@ -39,13 +39,6 @@ class ViewContractsFarmer extends Component {
       row: []
     }
   }
-
-  // viewImage = (landId) => {
-  //   alert(landId);
-  //   this.props.history.push({
-  //     pathname: '/viewImage',
-  //   })
-  // }
 
   componentDidMount = async () => {
     //For refreshing page only once
@@ -73,7 +66,7 @@ class ViewContractsFarmer extends Component {
       verified = await this.state.FarmInstance.methods.isVerified1(currentAddress).call();
       console.log(verified);
       this.setState({ verified: verified });
-      var registered = await this.state.FarmInstance.methods.isFarmer(currentAddress).call();
+      var registered = await this.state.FarmInstance.methods.isAdmin1(currentAddress).call();
       console.log(registered);
       this.setState({ registered: registered });
 
@@ -88,23 +81,23 @@ class ViewContractsFarmer extends Component {
         const businessId = await this.state.FarmInstance.methods.getContractBusiness(i).call();
         const farmerId = await this.state.FarmInstance.methods.getContractFarmer(i).call();
         let business = await this.state.FarmInstance.methods.getBusinessDetails(businessId).call();
-        if (farmerId.toLowerCase() === currentAddress.toLowerCase()) {
-          const contractID = await this.state.FarmInstance.methods.getContractId(i).call();
-          const quantity = await this.state.FarmInstance.methods.getContractQuantity(i).call();
-          const cropName = await this.state.FarmInstance.methods.getContractCropName(i).call();
-          const pricePerKg = await this.state.FarmInstance.methods.getContractPrice(i).call();
-          const deliveryTime = await this.state.FarmInstance.methods.getContractDeadLine(i).call();
-          const totalPrice = await this.state.FarmInstance.methods.getContractTotalPrice(i).call();
-          const advPayment = await this.state.FarmInstance.methods.getContractAdvPayment(i).call();
-          const businessName = business[0];
+        let farmer = await this.state.FarmInstance.methods.getFarmerDetails(farmerId).call();
+        const contractID = await this.state.FarmInstance.methods.getContractId(i).call();
+        const quantity = await this.state.FarmInstance.methods.getContractQuantity(i).call();
+        const cropName = await this.state.FarmInstance.methods.getContractCropName(i).call();
+        const pricePerKg = await this.state.FarmInstance.methods.getContractPrice(i).call();
+        const deliveryTime = await this.state.FarmInstance.methods.getContractDeadLine(i).call();
+        const totalPrice = await this.state.FarmInstance.methods.getContractTotalPrice(i).call();
+        const advPayment = await this.state.FarmInstance.methods.getContractAdvPayment(i).call();
+        const businessName = business[0];
+        const farmerName = farmer[0];
           // const farmerAge = farmer[1];
           // const farmerCity = farmer[2];
           // const farmerAdhar = farmer[3];
           // const farmerPan = farmer[4];
-          row.push({ contractID,  businessId, cropName, quantity, businessName,
-             pricePerKg, deliveryTime, totalPrice, advPayment });
+        row.push({ contractID, cropName, quantity, businessName, farmerName,
+            pricePerKg, deliveryTime, totalPrice, advPayment });
             //  farmerAge, farmerCity, farmerAdhar, farmerPan, 
-        }
       }
       this.setState({ row: row });
       console.log(row)
@@ -163,7 +156,7 @@ class ViewContractsFarmer extends Component {
                 <Col lg="12" md="12">
                   <Card>
                     <CardHeader>
-                      <CardTitle tag="h4">My Contracts
+                      <CardTitle tag="h4">Contracts
                       </CardTitle>
                     </CardHeader>
                     <CardBody>
@@ -171,8 +164,9 @@ class ViewContractsFarmer extends Component {
                       <thead className="text-primary">
                           <tr>
                             <th>#</th>
-                            <th>Business ID</th>
+                            {/* <th>Business ID</th> */}
                             <th>Business Name</th>
+                            <th>Farmer Name</th>
                             <th>Crop name</th>
                             <th>Land Doc</th>
                             <th>Quantity(kg)</th>
@@ -186,8 +180,8 @@ class ViewContractsFarmer extends Component {
                           {this.state.row.map((item, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>
-                              <td>{item.businessId}</td>
                               <td>{item.businessName}</td>
+                              <td>{item.farmerName}</td>
                               <td>{item.cropName}</td>
                               {/* <td><a href={`http://10.4.0.94:8080/ipfs/${item.landDoc}`} target="_blank">Click Here</a></td> */}
                               <td><a href={`https://ipfs.io/ipfs/${item.landDoc}`} target="_blank">Click Here</a></td>
@@ -214,4 +208,4 @@ class ViewContractsFarmer extends Component {
   }
 }
 
-export default ViewContractsFarmer;
+export default ContractInfo;

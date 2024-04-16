@@ -2,7 +2,7 @@ import Admin1Dashboard from "./views/Admin1Dashboard";
 // import ApproveContract from "./views/ApproveContract";
 import BusinessInfo from "./views/BusinessInfo";
 import FarmerInfo from "./views/FarmerInfo";
-// import ContractInfo from "./views ContractInfo";
+import ContractInfo from "./views/ContractInfo";
 
 var routes = [
   {
@@ -30,13 +30,13 @@ var routes = [
     component: FarmerInfo,
     layout: "/Admin1",
   },
-  // {
-  //   path: " ContractInfo",
-  //   name: " ContractInfo",
-  //   rtlName: "لوحة القيادة",
-  //   icon: "tim-icons icon-send",
-  //   component: ContractInfo,
-  //   layout: "/Admin1",
-  // },
+  {
+    path: "/ContractInfo",
+    name: "ContractInfo",
+    rtlName: "لوحة القيادة",
+    icon: "tim-icons icon-send",
+    component: ContractInfo,
+    layout: "/Admin1",
+  },
 ];
 export default routes;
