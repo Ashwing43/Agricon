@@ -146,8 +146,6 @@ contract Farm{
                         string memory _land_document
     ) public {
         require(RegisteredAddressMapping[msg.sender] && farmerMapping[msg.sender].id == msg.sender);
-
-        
         farmerMapping[msg.sender].name = _name;
         farmerMapping[msg.sender].age = _age;
         farmerMapping[msg.sender].city = _city;
@@ -293,7 +291,7 @@ contract Farm{
             uint id_temp = CropReqMap.length + 1;
             // CropReqMapComplete[id_temp] = false;
             requested[CropReqMap.length] == false;
-            CropReqMap.push(CropRequirement(id_temp, msg.sender, crop_name, quantity_in_kg, price_per_kg, block.timestamp+deliveryTime, false, _total, _advPayment));    
+            CropReqMap.push(CropRequirement(id_temp, msg.sender, crop_name, quantity_in_kg, price_per_kg, deliveryTime, false, _total, _advPayment));    
     }
 
     //below set of functions is for getting information about cropRequirement.
@@ -377,6 +375,9 @@ contract Farm{
 
 
     //below are the functions for displaying contracts data to the frontend
+    function getContractsCount() public view returns(uint256) {
+        return ContractsCount;
+    }
     function getContractBusiness(uint i) public view returns (address) {
         return Contracts[i].business;
     }

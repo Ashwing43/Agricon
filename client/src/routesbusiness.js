@@ -2,7 +2,7 @@ import BusinessDashboard from "./views/BusinessDashboard";
 import AddRequirement from "./views/AddRequirement";
 import ApproveRequest from "./views/ApproveRequest";
 import BusinessProfile from "./views/BusinessProfile";
-// import viewRequest from "./views/viewRequest";
+import ViewContracts from "./views/ViewContracts";
 import updateBusiness from "./views/updateBusiness";
 import Help from "./Help";
 
@@ -39,14 +39,14 @@ var routes = [
     component: ApproveRequest,
     layout: "/Business",
   },
-  // {
-  //   path: "/viewRequests",
-  //   name: "Requirements Sent",
-  //   rtlName: "الرموز",
-  //   icon: "tim-icons icon-image-02",
-  //   component: viewImage,
-  //   layout: "/Business",
-  // },
+  {
+    path: "/ViewContracts",
+    name: "Requirements Sent",
+    rtlName: "الرموز",
+    icon: "tim-icons icon-image-02",
+    component: ViewContracts,
+    layout: "/Business",
+  },
   {
     path: "/Help",
     name: "Help",

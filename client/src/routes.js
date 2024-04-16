@@ -1,6 +1,6 @@
 import farmerProfile from "./views/farmerProfile";
 import Dashboard from "./views/Dashboard";
-// import viewRequests from "./views/viewRequests";
+import ViewContractsFarmer from "./views/ViewContractsFarmer";
 // import MakePayment from "./views/MakePayment";
 import updateFarmer from "./views/updateFarmer";
 import Help from "./Help";
@@ -22,14 +22,14 @@ var routes = [
     component: farmerProfile,
     layout: "/admin",
   },
-  // {
-  //   path: "/viewRequests",
-  //   name: "View Requests",
-  //   rtlName: "الرموز",
-  //   icon: "tim-icons icon-Requests-02",
-  //   component: viewRequests,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/ViewContractsFarmer",
+    name: "View Contracts",
+    rtlName: "الرموز",
+    icon: "tim-icons icon-Requests-02",
+    component: ViewContractsFarmer,
+    layout: "/admin",
+  },
 
   // {
   //   path: "/MakePayment",

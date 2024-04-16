@@ -187,7 +187,6 @@ class FarmerInfo extends Component {
                             </Col>
                         </Row>
                     </div>
-
                 </div>
             );
         }

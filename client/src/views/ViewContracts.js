@@ -1,21 +1,24 @@
-import { ContractData, LoadingContainer } from '@drizzle/react-components';
+import {
+  ContractData, LoadingContainer
+} from '@drizzle/react-components';
 import { DrizzleProvider } from '@drizzle/react-plugin';
 import React, { Component } from 'react';
 import { Spinner } from 'react-bootstrap';
+// reactstrap components
 import { Button, Card, CardBody, CardHeader, CardTitle, Col, Row, Table } from "reactstrap";
 import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
 import "../index.css";
-import "../card.css"
+
+
 
 const drizzleOptions = {
   contracts: [Farm]
 }
 
-var userarr;
-var countarr;
+var verified;
 
-class BusinessDashboard extends Component {
+class ViewContracts extends Component {
   constructor(props) {
     super(props)
 
@@ -27,15 +30,24 @@ class BusinessDashboard extends Component {
       verified: '',
       registered: '',
       count: 0,
+      row : [],
       id: '',
-      row: [],
     }
   }
 
   componentDidMount = async () => {
+    //For refreshing page only once
+    if (!window.location.hash) {
+      window.location = window.location + '#loaded';
+      window.location.reload();
+    }
+
     try {
+      //Get network provider and web3 instance
       const web3 = await getWeb3();
+
       const accounts = await web3.eth.getAccounts();
+
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = Farm.networks[networkId];
       const instance = new web3.eth.Contract(
@@ -44,39 +56,54 @@ class BusinessDashboard extends Component {
       );
 
       const currentAddress = await web3.currentProvider.selectedAddress;
+      console.log(currentAddress);
       this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
-
-      const verified = await this.state.FarmInstance.methods.isVerified1(currentAddress).call();
+      verified = await this.state.FarmInstance.methods.isVerified1(currentAddress).call();
+      console.log(verified);
       this.setState({ verified: verified });
-
-      const registered = await this.state.FarmInstance.methods.isBusiness(currentAddress).call();
+      var registered = true;
       this.setState({ registered: registered });
 
-      const count = await this.state.FarmInstance.methods.getCropReqCount().call();
-      this.setState({ count: parseInt(count) });
-
-      userarr = await this.state.FarmInstance.methods.getFarmersCount().call();
-
+      var count = await this.state.FarmInstance.methods.getContractsCount().call();
+      count = parseInt(count);
+      // console.log(typeof (count));
+      console.log(count);
+      this.setState({count:count});
 
       const row = [];
       for (let i = 0; i < count; i++) {
-        const businessId = await this.state.FarmInstance.methods.getCropRequirementBusiness(i).call();
-        const status = await this.state.FarmInstance.methods.getCropRequirementStatus(i).call();
-        if (businessId.toLowerCase() === currentAddress.toLowerCase() && !status) {
-          const cropName = await this.state.FarmInstance.methods.getCropRequirementCropName(i).call();
-          const quantity = await this.state.FarmInstance.methods.getCropRequirementQuantity(i).call();
-          const pricePerKg = await this.state.FarmInstance.methods.getCropRequirementPrice(i).call();
-          const deliveryTime = await this.state.FarmInstance.methods.getCropRequirementDelTime(i).call();
-          const totalPrice = await this.state.FarmInstance.methods.getCropRequirementTotalPrice(i).call();
-          const advPayment = await this.state.FarmInstance.methods.getCropRequirementAdvPayment(i).call();
-          row.push({ cropName, quantity, pricePerKg, deliveryTime, totalPrice, advPayment });
+        const businessId = await this.state.FarmInstance.methods.getContractBusiness(i).call();
+        const farmerId = await this.state.FarmInstance.methods.getContractFarmer(i).call();
+        let farmer = await this.state.FarmInstance.methods.getFarmerDetails(farmerId).call();
+        if (businessId.toLowerCase() === currentAddress.toLowerCase()) {
+          const contractID = await this.state.FarmInstance.methods.getContractId(i).call();
+          const quantity = await this.state.FarmInstance.methods.getContractQuantity(i).call();
+          const cropName = await this.state.FarmInstance.methods.getContractCropName(i).call();
+          const pricePerKg = await this.state.FarmInstance.methods.getContractPrice(i).call();
+          const deliveryTime = await this.state.FarmInstance.methods.getContractDeadLine(i).call();
+          const totalPrice = await this.state.FarmInstance.methods.getContractTotalPrice(i).call();
+          const advPayment = await this.state.FarmInstance.methods.getContractAdvPayment(i).call();
+          const farmerName = farmer[0];
+          // const farmerAge = farmer[1];
+          // const farmerCity = farmer[2];
+          // const farmerAdhar = farmer[3];
+          // const farmerPan = farmer[4];
+          const landDoc = farmer[5];
+          row.push({ contractID,  farmerId, cropName, quantity, farmerName, landDoc, 
+             pricePerKg, deliveryTime, totalPrice, advPayment });
+            //  farmerAge, farmerCity, farmerAdhar, farmerPan, 
         }
       }
       this.setState({ row: row });
-      // countarr = row.length;
+      console.log(row)
+
+
 
     } catch (error) {
-      alert(`Failed to load web3, accounts, or contract. Check console for details.`);
+      // Catch any errors for any of the above operations.
+      alert(
+        `Failed to load web3, accounts, or contract. Check console for details.`,
+      );
       console.error(error);
     }
   };
@@ -90,17 +117,18 @@ class BusinessDashboard extends Component {
               <Spinner animation="border" variant="primary" />
             </h1>
           </div>
+
         </div>
       );
     }
 
-    if (!this.state.registered) {
+    if (!this.state.registered || !this.state.verified) {
       return (
         <div className="content">
           <div>
             <Row>
               <Col xs="6">
-                <Card className="card-chart">
+                <Card>
                   <CardBody>
                     <h1>
                       You are not verified to view this page
@@ -110,9 +138,11 @@ class BusinessDashboard extends Component {
               </Col>
             </Row>
           </div>
+
         </div>
       );
     }
+
 
     return (
       <>
@@ -121,22 +151,22 @@ class BusinessDashboard extends Component {
             <LoadingContainer>
               <div className="main-section">
                 <Row>
-                  <Col lg="4">
-                    <div class="dashbord dashbord-skyblue">
+                  {/* <Col lg="4"> */}
+                    {/* <div class="dashbord dashbord-skyblue">
                       <div class="icon-section">
                         <i class="fa fa-users" aria-hidden="true"></i><br />
                         <medium>Total Farmers</medium><br />
-                        <p> {userarr} </p>
-                      </div>
+                        {/* <p> {userarr} </p> */}
+                      {/* </div>
                       <div class="detail-section"><br />
                       </div>
-                    </div>
-                  </Col>
+                    </div> */}
+                  {/* </Col> */}
                   <Col lg="4">
                     <div class="dashbord dashbord-orange">
                       <div class="icon-section">
                         <i class="fa fa-landmark" aria-hidden="true"></i><br />
-                        <medium>Added CropRquirements Count</medium><br />
+                        <medium>Signed Contracts Count</medium><br />
                         <p>{this.state.row.length}</p>
                       </div>
                       <div class="detail-section"><br />
@@ -147,66 +177,6 @@ class BusinessDashboard extends Component {
               </div>
             </LoadingContainer>
           </DrizzleProvider>
-          <Row>
-            <Col lg="3">
-              <Card>
-                <CardHeader>
-                  <h5 className="title">Wish to Add Crop Requirement !</h5>
-                </CardHeader>
-                <CardBody>
-                  <div className="chart-area">
-
-                    <Button href="/Business/AddRequirement" disabled={!this.state.verified} className="btn-fill" color="primary">
-                      Add Crop Requirement
-                    </Button>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="3">
-              <Card>
-                <CardHeader>
-                  <h5 className="title">Profile</h5>
-                </CardHeader>
-                <CardBody>
-                  <div className="chart-area">
-                    <Button href="/Business/BusinessProfile" className="btn-fill" color="primary">
-                      View Profile
-                    </Button>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="3">
-              <Card>
-                <CardHeader>
-                  <h5 className="title">Requests</h5>
-                </CardHeader>
-                <CardBody>
-                  <div className="chart-area">
-                    <Button href="/Business/ApproveRequest" disabled={!this.state.verified} className="btn-fill" color="primary">
-                      View all Requests
-                    </Button>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="3">
-              <Card>
-                <CardHeader>
-                  {/* <CardTitle>View Signed Contracts!</CardTitle> */}
-                  <h5 className="title">View Signed Contracts!</h5>
-                </CardHeader>
-                <CardBody>
-                  <div className="chart-area">
-                    <Button href="/Business/ViewContracts" className="btn-fill" color="primary">
-                      View contracts
-                    </Button>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
 
           <DrizzleProvider options={drizzleOptions}>
             <LoadingContainer>
@@ -214,14 +184,17 @@ class BusinessDashboard extends Component {
                 <Col lg="12" md="12">
                   <Card>
                     <CardHeader>
-                      <CardTitle tag="h4">Crop Requirement Info</CardTitle>
+                      <CardTitle tag="h4">My Contracts</CardTitle>
                     </CardHeader>
                     <CardBody>
                       <Table className="tablesorter" responsive color="black">
                         <thead className="text-primary">
                           <tr>
                             <th>#</th>
+                            <th>Farmer ID</th>
+                            <th>Farmer Name</th>
                             <th>Crop name</th>
+                            <th>Land Doc</th>
                             <th>Quantity(kg)</th>
                             <th>Price(kg)</th>
                             <th>Delivery Time</th>
@@ -233,7 +206,11 @@ class BusinessDashboard extends Component {
                           {this.state.row.map((item, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>
+                              <td>{item.farmerId}</td>
+                              <td>{item.farmerName}</td>
                               <td>{item.cropName}</td>
+                              {/* <td><a href={`http://10.4.0.94:8080/ipfs/${item.landDoc}`} target="_blank">Click Here</a></td> */}
+                              <td><a href={`https://ipfs.io/ipfs/${item.landDoc}`} target="_blank">Click Here</a></td>
                               <td>{item.quantity}</td>
                               <td>{item.pricePerKg}</td>
                               <td>{item.deliveryTime}</td>
@@ -251,8 +228,10 @@ class BusinessDashboard extends Component {
           </DrizzleProvider>
         </div>
       </>
+
     );
+
   }
 }
 
-export default BusinessDashboard;
+export default ViewContracts;

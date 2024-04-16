@@ -208,18 +208,6 @@ class Dashboard extends Component {
                       </div>
                     </div>
                   </Col>
-                  <Col lg="4">
-                    <div class="dashbord dashbord-blue">
-                      <div class="icon-section">
-                        <i class="fa fa-bell" aria-hidden="true"></i><br />
-                        <medium>Total Requests</medium><br />
-                        {/* <p>{reqsarr}</p> */}
-                      </div>
-                      <div class="detail-section">
-                        <br />
-                      </div>
-                    </div>
-                  </Col>
                 </Row>
               </div>
             </LoadingContainer>
@@ -246,22 +234,8 @@ class Dashboard extends Component {
                 </CardHeader>
                 <CardBody>
                   <div className="chart-area">
-                    <Button href="/admin/OwnedLands" className="btn-fill" color="primary">
+                    <Button href="/admin/ViewContractsFarmer" className="btn-fill" color="primary">
                       View Your Signed Contracts
-                    </Button>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="4">
-              <Card>
-                <CardHeader>
-                  <h5 className="title">View Requested Contracts</h5>
-                </CardHeader>
-                <CardBody>
-                  <div className="chart-area">
-                    <Button href="/admin/MakePayment" className="btn-fill" color="primary">
-                      View Requested Contract
                     </Button>
                   </div>
                 </CardBody>
