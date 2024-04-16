@@ -126,7 +126,7 @@ class FarmerInfo extends Component {
                 var not_verify = await this.state.FarmInstance.methods.isRejected(farmersMap[i]).call();
                 console.log(not_verify);
                 // farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[1]}</td><td>{farmer[2]}</td><td>{farmer[3]}</td><td>{farmer[4]}</td><td><a href={`https://ipfs.io/ipfs/${farmer[5]}`} target="_blank">Click Here</a></td>
-                farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[1]}</td><td>{farmer[2]}</td><td>{farmer[3]}</td><td>{farmer[4]}</td><td><a href={`http://192.168.0.118:8080/ipfs/${farmer[5]}`} target="_blank">Click Here</a></td>
+                farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[1]}</td><td>{farmer[2]}</td><td>{farmer[3]}</td><td>{farmer[4]}</td><td><a href={`http://10.4.0.94:8080/ipfs/${farmer[5]}`} target="_blank">Click Here</a></td>
                                                                                                                                                                                                       {/* ^ */}
                                                                                                                                                                                                       {/* | */}
                                                                                                                                                                                        {/* here you have to put host address for your ipfs server */}
