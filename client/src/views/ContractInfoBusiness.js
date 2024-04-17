@@ -5,12 +5,10 @@ import { DrizzleProvider } from '@drizzle/react-plugin';
 import React, { Component } from 'react';
 import { Spinner } from 'react-bootstrap';
 // reactstrap components
-import {
-  Card, CardBody, CardHeader, CardTitle, Col, Row, Table
-} from "reactstrap";
+import { Button, Card, CardBody, CardHeader, CardTitle, Col, Row, Table } from "reactstrap";
 import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
-
+import "../index.css";
 
 
 
@@ -18,34 +16,42 @@ const drizzleOptions = {
   contracts: [Farm]
 }
 
-
 var verified;
-var row = [];
 
-
-class ViewContractsFarmer extends Component {
+class ContractInfoBusiness extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      LandInstance: undefined,
+      FarmInstance: undefined,
       account: null,
       web3: null,
       flag: null,
       verified: '',
       registered: '',
       count: 0,
+      row : [],
       id: '',
-      row: []
+      amount : 0
     }
   }
 
-  // viewImage = (landId) => {
-  //   alert(landId);
-  //   this.props.history.push({
-  //     pathname: '/viewImage',
-  //   })
-  // }
+  payRemain = ( farmerId, amount, index) => async() => {
+    this.setState({amount : amount})
+    console.log(this.state.amount);
+    console.log(amount);
+    console.log(index);
+    // console.log(amount);
+    await this.state.FarmInstance.methods.payRemaining(
+      farmerId,
+      index
+    ).send({
+      from: this.state.account,
+      gas: 2100000,
+      value: amount
+    });
+    window.location.reload();
+  }
 
   componentDidMount = async () => {
     //For refreshing page only once
@@ -68,27 +74,27 @@ class ViewContractsFarmer extends Component {
       );
 
       const currentAddress = await web3.currentProvider.selectedAddress;
-      console.log(currentAddress);
+      // console.log(currentAddress);
       this.setState({ FarmInstance: instance, web3: web3, account: accounts[0] });
       verified = await this.state.FarmInstance.methods.isVerified1(currentAddress).call();
-      console.log(verified);
+      // console.log(verified);
       this.setState({ verified: verified });
-      var registered = await this.state.FarmInstance.methods.isFarmer(currentAddress).call();
-      console.log(registered);
+      var registered = true;
       this.setState({ registered: registered });
 
       var count = await this.state.FarmInstance.methods.getContractsCount().call();
       count = parseInt(count);
-      console.log(typeof (count));
-      console.log(count);
+      // console.log(typeof (count));
+      // console.log(count);
       this.setState({count:count});
 
       const row = [];
+      // const rowStatus = [];
       for (let i = 0; i < count; i++) {
         const businessId = await this.state.FarmInstance.methods.getContractBusiness(i).call();
         const farmerId = await this.state.FarmInstance.methods.getContractFarmer(i).call();
-        let business = await this.state.FarmInstance.methods.getBusinessDetails(businessId).call();
-        if (farmerId.toLowerCase() === currentAddress.toLowerCase()) {
+        let farmer = await this.state.FarmInstance.methods.getFarmerDetails(farmerId).call();
+        if (businessId.toLowerCase() === currentAddress.toLowerCase()) {
           const contractID = await this.state.FarmInstance.methods.getContractId(i).call();
           const quantity = await this.state.FarmInstance.methods.getContractQuantity(i).call();
           const cropName = await this.state.FarmInstance.methods.getContractCropName(i).call();
@@ -96,18 +102,25 @@ class ViewContractsFarmer extends Component {
           const deliveryTime = await this.state.FarmInstance.methods.getContractDeadLine(i).call();
           const totalPrice = await this.state.FarmInstance.methods.getContractTotalPrice(i).call();
           const advPayment = await this.state.FarmInstance.methods.getContractAdvPayment(i).call();
-          const businessName = business[0];
+          const PaymentStatus = await this.state.FarmInstance.methods.isComplete(i).call();
+          // rowStatus.push(PaymentStatus);
+          // if(PaymentStatus != true) PaymentStatus = false;
+          // console.log(PaymentStatus);
+          const farmerName = farmer[0];
           // const farmerAge = farmer[1];
           // const farmerCity = farmer[2];
           // const farmerAdhar = farmer[3];
           // const farmerPan = farmer[4];
-          row.push({ contractID,  businessId, cropName, quantity, businessName,
-             pricePerKg, deliveryTime, totalPrice, advPayment });
+          const landDoc = farmer[5];
+          row.push({ contractID,  farmerId, cropName, quantity, farmerName, landDoc, 
+             pricePerKg, deliveryTime, totalPrice, advPayment, PaymentStatus });
             //  farmerAge, farmerCity, farmerAdhar, farmerPan, 
         }
       }
       this.setState({ row: row });
-      console.log(row)
+      // console.log(row)
+
+
 
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -132,13 +145,13 @@ class ViewContractsFarmer extends Component {
       );
     }
 
-    if (!this.state.registered) {
+    if (!this.state.registered || !this.state.verified) {
       return (
         <div className="content">
           <div>
             <Row>
               <Col xs="6">
-                <Card className="card-chart">
+                <Card>
                   <CardBody>
                     <h1>
                       You are not verified to view this page
@@ -159,20 +172,50 @@ class ViewContractsFarmer extends Component {
         <div className="content">
           <DrizzleProvider options={drizzleOptions}>
             <LoadingContainer>
+              <div className="main-section">
+                <Row>
+                  {/* <Col lg="4"> */}
+                    {/* <div class="dashbord dashbord-skyblue">
+                      <div class="icon-section">
+                        <i class="fa fa-users" aria-hidden="true"></i><br />
+                        <medium>Total Farmers</medium><br />
+                        {/* <p> {userarr} </p> */}
+                      {/* </div>
+                      <div class="detail-section"><br />
+                      </div>
+                    </div> */}
+                  {/* </Col> */}
+                  <Col lg="4">
+                    <div class="dashbord dashbord-orange">
+                      <div class="icon-section">
+                        <i class="fa fa-landmark" aria-hidden="true"></i><br />
+                        <medium>Signed Contracts Count</medium><br />
+                        <p>{this.state.row.length}</p>
+                      </div>
+                      <div class="detail-section"><br />
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </LoadingContainer>
+          </DrizzleProvider>
+
+          <DrizzleProvider options={drizzleOptions}>
+            <LoadingContainer>
               <Row>
                 <Col lg="12" md="12">
                   <Card>
                     <CardHeader>
-                      <CardTitle tag="h4">My Contracts
-                      </CardTitle>
+                      <CardTitle tag="h4">My Contracts</CardTitle>
                     </CardHeader>
                     <CardBody>
                       <Table className="tablesorter" responsive color="black">
-                      <thead className="text-primary">
+                        <thead className="text-primary">
                           <tr>
                             <th>#</th>
-                            <th>Business ID</th>
-                            <th>Business Name</th>
+                            <th>Farmer ID</th>
+                            <th>Farmer Name</th>
                             <th>Crop name</th>
                             <th>Land Doc</th>
                             <th>Quantity(kg)</th>
@@ -180,14 +223,16 @@ class ViewContractsFarmer extends Component {
                             <th>Delivery Time</th>
                             <th>Total Price</th>
                             <th>Advanced Payment</th>
+                            <th>Remaining Payment status</th>
+                            <th>Pay Remaining</th>
                           </tr>
                         </thead>
                         <tbody>
                           {this.state.row.map((item, index) => (
                             <tr key={index}>
                               <td>{index + 1}</td>
-                              <td>{item.businessId}</td>
-                              <td>{item.businessName}</td>
+                              <td>{item.farmerId}</td>
+                              <td>{item.farmerName}</td>
                               <td>{item.cropName}</td>
                               {/* <td><a href={`http://10.4.0.94:8080/ipfs/${item.landDoc}`} target="_blank">Click Here</a></td> */}
                               <td><a href={`https://ipfs.io/ipfs/${item.landDoc}`} target="_blank">Click Here</a></td>
@@ -196,6 +241,13 @@ class ViewContractsFarmer extends Component {
                               <td>{item.deliveryTime}</td>
                               <td>{item.totalPrice}</td>
                               <td>{item.advPayment}</td>
+                              <td>{item.PaymentStatus ? "Paid" : "Pending"}</td>
+                              <td>
+                                <Button onClick={this.payRemain(item.farmerId, item.totalPrice - item.advPayment, item.contractID - 1)} disabled={item.PaymentStatus} className="btn btn-danger">Pay</Button>
+                              </td>
+                              {/* {console.log(item.farmerId)}
+                              {console.log(item.totalPrice - item.advPayment)}
+                              {console.log(item.contractID)} */}
                             </tr>
                           ))}
                         </tbody>
@@ -214,4 +266,4 @@ class ViewContractsFarmer extends Component {
   }
 }
 
-export default ViewContractsFarmer;
+export default ContractInfoBusiness;

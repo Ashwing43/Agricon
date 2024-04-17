@@ -370,7 +370,7 @@ contract Farm{
             /* First access the advancedPayment value from CropReqMap using index i 
                and pass it using web3.js frontend(refer "makePayment.js" for this)*/
         farmerAddress.transfer(msg.value);
-        advancedPaymentReceived[i] = true;
+        advancedPaymentReceived.push(true);
     }
 
 

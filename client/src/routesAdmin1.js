@@ -7,7 +7,7 @@ import ContractInfo from "./views/ContractInfo";
 var routes = [
   {
     path: "/Admin1Dashboard",
-    name: "Admin1Dashboard",
+    name: "Admin Dashboard",
     rtlName: "لوحة القيادة",
     icon: "tim-icons icon-chart-pie-36",
     component: Admin1Dashboard,
@@ -16,7 +16,7 @@ var routes = [
 
   {
     path: "/BusinessInfo",
-    name: "BusinessInfo",
+    name: "Business Info",
     rtlName: "لوحة القيادة",
     icon: "tim-icons icon-single-02",
     component: BusinessInfo,
@@ -24,7 +24,7 @@ var routes = [
   },
   {
     path: "/FarmerInfo",
-    name: "FarmerInfo",
+    name: "Farmer Info",
     rtlName: "لوحة القيادة",
     icon: "tim-icons icon-single-02",
     component: FarmerInfo,
@@ -32,7 +32,7 @@ var routes = [
   },
   {
     path: "/ContractInfo",
-    name: "ContractInfo",
+    name: "Contracts Info",
     rtlName: "لوحة القيادة",
     icon: "tim-icons icon-send",
     component: ContractInfo,

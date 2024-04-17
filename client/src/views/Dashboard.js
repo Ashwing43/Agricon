@@ -234,7 +234,7 @@ class Dashboard extends Component {
                 </CardHeader>
                 <CardBody>
                   <div className="chart-area">
-                    <Button href="/admin/ViewContractsFarmer" className="btn-fill" color="primary">
+                    <Button href="/admin/ContractInfoFarmer" className="btn-fill" color="primary">
                       View Your Signed Contracts
                     </Button>
                   </div>

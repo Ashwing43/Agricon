@@ -1,6 +1,6 @@
 import farmerProfile from "./views/farmerProfile";
 import Dashboard from "./views/Dashboard";
-import ViewContractsFarmer from "./views/ViewContractsFarmer";
+import ContractInfoFarmer from "./views/ContractInfoFarmer";
 // import MakePayment from "./views/MakePayment";
 import updateFarmer from "./views/updateFarmer";
 import Help from "./Help";
@@ -8,7 +8,7 @@ import Help from "./Help";
 var routes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Farmer Dashboard",
     rtlName: "لوحة القيادة",
     icon: "tim-icons icon-chart-pie-36",
     component: Dashboard,
@@ -23,11 +23,11 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/ViewContractsFarmer",
-    name: "View Contracts",
+    path: "/ContractInfoFarmer",
+    name: "Contracts Info",
     rtlName: "الرموز",
     icon: "tim-icons icon-Requests-02",
-    component: ViewContractsFarmer,
+    component: ContractInfoFarmer,
     layout: "/admin",
   },
 
@@ -49,7 +49,7 @@ var routes = [
   },
   {
     path: "/updateFarmer",
-    name: "",
+    name: "Update Farmer",
     rtlName: "الرموز",
     icon: "tim-icons",
     component: updateFarmer,

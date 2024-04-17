@@ -199,7 +199,7 @@ class BusinessDashboard extends Component {
                 </CardHeader>
                 <CardBody>
                   <div className="chart-area">
-                    <Button href="/Business/ViewContracts" className="btn-fill" color="primary">
+                    <Button href="/Business/ContractInfoBusiness" className="btn-fill" color="primary">
                       View contracts
                     </Button>
                   </div>
