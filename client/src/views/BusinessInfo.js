@@ -113,7 +113,7 @@ class BusinessInfo extends Component {
                 console.log(not_verify);
 
                 // BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank">Click Here</a></td>
-                BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`http://10.4.0.94:8080/ipfs/${business[4]}`} target="_blank">Click Here</a></td>
+                BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`http://192.168.129.32:8080/ipfs/${business[4]}`} target="_blank">Click Here</a></td>
                                                                                                                                                                                                                       {/* ^ */}
                                                                                                                                                                                                                       {/* | */}
                                                                                                                                                                                                       {/* here you have to put host address for your ipfs server */}

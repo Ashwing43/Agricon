@@ -52,7 +52,7 @@ module.exports = {
     },
 
     // development: {
-    //   host: "10.4.0.94",     // Localhost (default: none)
+    //   host: "192.168.129.32",     // Localhost (default: none)
     //   //Add your ipv4 address
     //   port: 8545,            // Standard Ethereum port (default: none)
     //   //May need to change port to 7545

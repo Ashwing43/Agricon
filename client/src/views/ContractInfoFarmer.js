@@ -96,13 +96,14 @@ class ContractInfoFarmer extends Component {
           const deliveryTime = await this.state.FarmInstance.methods.getContractDeadLine(i).call();
           const totalPrice = await this.state.FarmInstance.methods.getContractTotalPrice(i).call();
           const advPayment = await this.state.FarmInstance.methods.getContractAdvPayment(i).call();
+          const remPayment = await this.state.FarmInstance.methods.isComplete(i).call();
           const businessName = business[0];
           // const farmerAge = farmer[1];
           // const farmerCity = farmer[2];
           // const farmerAdhar = farmer[3];
           // const farmerPan = farmer[4];
           row.push({ contractID,  businessId, cropName, quantity, businessName,
-             pricePerKg, deliveryTime, totalPrice, advPayment });
+             pricePerKg, deliveryTime, totalPrice, advPayment, remPayment });
             //  farmerAge, farmerCity, farmerAdhar, farmerPan, 
         }
       }
@@ -196,7 +197,8 @@ class ContractInfoFarmer extends Component {
                               <td>{item.pricePerKg}</td>
                               <td>{item.deliveryTime}</td>
                               <td>{item.totalPrice}</td>
-                              <td>{item.advPayment}</td>
+                              <td>{(item.advPayment) ? "Paid" : "Pending"}</td>
+                              <td>{(item.remPayment) ? "Paid" : "Pending"}</td>
                             </tr>
                           ))}
                         </tbody>
