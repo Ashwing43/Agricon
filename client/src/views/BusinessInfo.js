@@ -112,8 +112,8 @@ class BusinessInfo extends Component {
                 var not_verify = await this.state.FarmInstance.methods.isRejected(BusinessMap[i]).call();
                 console.log(not_verify);
 
-                // BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank" rel="noreferrer">Click Here</a></td>
-                BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`http://127.0.0.1:8080/ipfs/${business[4]}`} target="_blank" rel="noreferrer">Click Here</a></td>
+                BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank" rel="noreferrer">Click Here</a></td>
+                {/* // BusinessTable.push(<tr><td>{i + 1}</td><td>{BusinessMap[i]}</td><td>{business[0]}</td><td>{business[1]}</td><td>{business[2]}</td><td>{business[3]}</td><td>{business[5]}</td><td><a href={`http://127.0.0.1:8080/ipfs/${business[4]}`} target="_blank" rel="noreferrer">Click Here</a></td> */}
                                                                                                                                                                                                                       {/* ^ */}
                                                                                                                                                                                                                       {/* | */}
                                                                                                                                                                                                       {/* here you have to put host address for your ipfs server */}

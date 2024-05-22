@@ -171,7 +171,8 @@ class ApproveRequest extends Component {
                                 Pan: {farmerDetails[4]}
                             </tr>
                             <tr>
-                                <a href={`http://127.0.0.1:8080/ipfs/${farmerDetails[5]}`} target="_blank" rel="noreferrer">Land Doc</a>
+                                <a href={`https://ipfs.infura.io/ipfs/${farmerDetails[5]}`} target="_blank" rel="noreferrer">Land Doc</a>
+
                             </tr>
                         </td>
                         <td>
