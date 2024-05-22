@@ -1,5 +1,5 @@
 import {
-  ContractData, LoadingContainer
+  LoadingContainer
 } from '@drizzle/react-components';
 import { DrizzleProvider } from '@drizzle/react-plugin';
 import React, { Component } from 'react';
@@ -20,7 +20,7 @@ const drizzleOptions = {
 
 
 var verified;
-var row = [];
+// var row = [];
 
 
 class ContractInfo extends Component {
@@ -183,8 +183,8 @@ class ContractInfo extends Component {
                               <td>{item.businessName}</td>
                               <td>{item.farmerName}</td>
                               <td>{item.cropName}</td>
-                              <td><a href={`http://127.0.0.1:8080/ipfs/${item.landDoc}`} target="_blank">Click Here</a></td>
-                              {/* <td><a href={`https://ipfs.io/ipfs/${item.landDoc}`} target="_blank">Click Here</a></td> */}
+                              <td><a href={`http://127.0.0.1:8080/ipfs/${item.landDoc}`} target="_blank" rel="noreferrer">Click Here</a></td>
+                              {/* <td><a href={`https://ipfs.io/ipfs/${item.landDoc}`} target="_blank" rel="noreferrer">Click Here</a></td> */}
                               <td>{item.quantity}</td>
                               <td>{item.pricePerKg}</td>
                               <td>{item.deliveryTime}</td>

@@ -7,8 +7,8 @@ import PerfectScrollbar from "perfect-scrollbar";
 // core components
 import AdminNavbar from "../../components/Navbars/AdminNavbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
-import BusinessDashboard from  "../../views/BusinessDashboard";
+// import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
+// import BusinessDashboard from  "../../views/BusinessDashboard";
 import routes from "../../routesbusiness";
 import Footer from "../../components/Footer/Footer";
 import logo from "../../assets/img/react-logo.png";

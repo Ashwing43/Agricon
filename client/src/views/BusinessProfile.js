@@ -150,8 +150,8 @@ class BusinessProfile extends Component {
           <Col md="12">
             <FormGroup>
               <label>License</label>
-              {/* <div class="post-meta"><span class="timestamp"> <a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank">Here</a></span></div> */}
-              <div class="post-meta"><span class="timestamp"> <a href={`http://127.0.0.1:8080/ipfs/${business[4]}`} target="_blank">Here</a></span></div>
+              {/* <div class="post-meta"><span class="timestamp"> <a href={`https://ipfs.io/ipfs/${business[4]}`} target="_blank" rel="noreferrer">Here</a></span></div> */}
+              <div class="post-meta"><span class="timestamp"> <a href={`http://127.0.0.1:8080/ipfs/${business[4]}`} target="_blank" rel="noreferrer">Here</a></span></div>
                                                                                       {/* ^ */}
                                                                                       {/* | */}
                                                                         {/* here you have to put host address for your ipfs server */}

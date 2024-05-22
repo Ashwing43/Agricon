@@ -36,7 +36,8 @@ class ApproveRequest extends Component {
         }
     }
     approveRequest = (farmer_Id, reqId, adv_Payment) => async () => {
-        this.state.val = adv_Payment;
+        // this.state.val = adv_Payment;
+        this.setState({val : adv_Payment});
         await this.state.FarmInstance.methods.signContract(
             farmer_Id, reqId
         ).send({
@@ -170,14 +171,14 @@ class ApproveRequest extends Component {
                                 Pan: {farmerDetails[4]}
                             </tr>
                             <tr>
-                                <a href={`http://127.0.0.1:8080/ipfs/${farmerDetails[5]}`} target="_blank">Land Doc</a>
+                                <a href={`http://127.0.0.1:8080/ipfs/${farmerDetails[5]}`} target="_blank" rel="noreferrer">Land Doc</a>
                             </tr>
                         </td>
                         <td>
                             <Button onClick={this.approveRequest(farmerId, i, advPayment)} className="btn btn-danger">
                                 Approve
                             </Button>
-                            <a> </a>
+                            <a href="/ApproveRequest.js"> </a>
                             <Button onClick={this.rejectRequest(i)} className="btn btn-danger">
                                 Reject
                             </Button>

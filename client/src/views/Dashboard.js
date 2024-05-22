@@ -1,5 +1,5 @@
 import {
-  ContractData, LoadingContainer
+  LoadingContainer
 } from '@drizzle/react-components';
 import { DrizzleProvider } from '@drizzle/react-plugin';
 import React, { Component } from "react";
@@ -92,7 +92,7 @@ class Dashboard extends Component {
 
       var ind = 0;
       var row = [];
-      for (var i = 0; i < count; i++) {
+      for (i = 0; i < count; i++) {
         ind++;
         // console.log(rowStatus[i]);
         if (!rowStatus[i]) {

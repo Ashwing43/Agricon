@@ -8,8 +8,8 @@ import PerfectScrollbar from "perfect-scrollbar";
 import AdminNavbar from "../../components/Navbars/AdminNavbar";
 import Footer from "../../components/Footer/Footer";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
-import Admin1Dashboard from "../../views/Admin1Dashboard";
+// import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
+// import Admin1Dashboard from "../../views/Admin1Dashboard";
 import routes from "../../routesAdmin1";
 
 import logo from "../../assets/img/react-logo.png";

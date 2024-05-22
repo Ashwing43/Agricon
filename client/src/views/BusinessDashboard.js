@@ -1,4 +1,4 @@
-import { ContractData, LoadingContainer } from '@drizzle/react-components';
+import { LoadingContainer } from '@drizzle/react-components';
 import { DrizzleProvider } from '@drizzle/react-plugin';
 import React, { Component } from 'react';
 import { Spinner } from 'react-bootstrap';
@@ -13,7 +13,7 @@ const drizzleOptions = {
 }
 
 var userarr;
-var countarr;
+// var countarr;
 
 class BusinessDashboard extends Component {
   constructor(props) {

@@ -79,7 +79,7 @@ export default class Login extends Component {
 
                 <div className="bodyC">
                     <div className="img-wrapper">
-                        <img src="https://www.kultivate.in/images/contract.png" className="logo" />
+                        <img alt='image1' src="https://www.kultivate.in/images/contract.png" className="logo" />
                         <div className="wine-text-container">
                             <div className="site-title wood-text">Agricon</div>
                         </div>
@@ -102,7 +102,7 @@ export default class Login extends Component {
                     <h3 style={{ color: "wheat" }}>Help?</h3>
                 </a>
                 <div className="img-wrapper">
-                    <img src="https://www.kultivate.in/images/contract.png" className="logo" />
+                    <img alt = "image2" src="https://www.kultivate.in/images/contract.png" className="logo" />
                     <div className="wine-text-container">
                         <div className="site-title wood-text">AGRICON</div>
                     </div>

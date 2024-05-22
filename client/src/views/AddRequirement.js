@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import FarmContract from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
-import ipfs from '../ipfs';
 
 import {
   Button,
@@ -11,14 +10,13 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  CardText,
   FormGroup,
   Form,
   Input,
   Row,
   Col,
 } from "reactstrap";
-import { Spinner,   FormFile} from 'react-bootstrap';
+import { Spinner} from 'react-bootstrap';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -87,7 +85,7 @@ class AddRequirement extends Component {
     // this.addDoc();
     // alert('After add image')
     await new Promise(resolve => setTimeout(resolve, 15000));
-    if (this.state.crop_name == '' || this.state.price_per_kg == '' || this.state.quantity_in_kg == '' || this.state.deliveryTime == '' || this.state._total == '' || this.state._advPayment == '') {
+    if (this.state.crop_name === '' || this.state.price_per_kg === '' || this.state.quantity_in_kg === '' || this.state.deliveryTime === '' || this.state._total === '' || this.state._advPayment === '') {
       alert("All the fields are compulsory!");
     } else if ((!Number(this.state.price_per_kg)) || (!Number(this.state.quantity_in_kg)) || (!Number(this.state._total)) || (!Number(this.state._advPayment)) || (!Number(this.state.deliveryTime))) {
       alert("price, Quantity, Total, and Advanced Payment must be a number!");

@@ -17,7 +17,7 @@ const drizzleOptions = {
 }
 
 var farmerTable = [];
-var completed = true;
+// var completed = true;
 
 // function sendMail(email, name) {
 //     // alert(typeof(name));
@@ -125,8 +125,8 @@ class FarmerInfo extends Component {
 
                 var not_verify = await this.state.FarmInstance.methods.isRejected(farmersMap[i]).call();
                 console.log(not_verify);
-                // farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[1]}</td><td>{farmer[2]}</td><td>{farmer[3]}</td><td>{farmer[4]}</td><td><a href={`https://ipfs.io/ipfs/${farmer[5]}`} target="_blank">Click Here</a></td>
-                farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[1]}</td><td>{farmer[2]}</td><td>{farmer[3]}</td><td>{farmer[4]}</td><td><a href={`http://127.0.0.1:8080/ipfs/${farmer[5]}`} target="_blank">Click Here</a></td>
+                // farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[1]}</td><td>{farmer[2]}</td><td>{farmer[3]}</td><td>{farmer[4]}</td><td><a href={`https://ipfs.io/ipfs/${farmer[5]}`} target="_blank" rel="noreferrer">Click Here</a></td>
+                farmerTable.push(<tr><td>{i + 1}</td><td>{farmersMap[i]}</td><td>{farmer[0]}</td><td>{farmer[1]}</td><td>{farmer[2]}</td><td>{farmer[3]}</td><td>{farmer[4]}</td><td><a href={`http://127.0.0.1:8080/ipfs/${farmer[5]}`} target="_blank" rel="noreferrer">Click Here</a></td>
                                                                                                                                                                                                       {/* ^ */}
                                                                                                                                                                                                       {/* | */}
                                                                                                                                                                                        {/* here you have to put host address for your ipfs server */}

@@ -70,7 +70,7 @@ export default function Help() {
             <div className="container">
                 <h1>Demo</h1>
                 <div className="embed-responsive embed-responsive-16by9">
-                    <iframe className="embed-responsive-item" src="https://www.youtube.com/" allowfullscreen="true"></iframe>
+                    <iframe title="iframe1" className="embed-responsive-item" src="https://www.youtube.com/" allowfullscreen="true"></iframe>
                 </div>
 
                 <div style={{ marginTop: "10px" }}>

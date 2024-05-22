@@ -90,11 +90,11 @@ class RegisterFarmer extends Component {
         this.addDoc();
         // alert('After add image')
         await new Promise(resolve => setTimeout(resolve, 10000));
-        if (this.state.name == '' || this.state.age == '' || this.state.aadharNumber == '' || this.state.panNumber == '') {
+        if (this.state.name === '' || this.state.age === '' || this.state.aadharNumber === '' || this.state.panNumber === '') {
             alert("All the fields are compulsory!");
-        } else if (!Number(this.state.aadharNumber) || this.state.aadharNumber.length != 12) {
+        } else if (!Number(this.state.aadharNumber) || this.state.aadharNumber.length !== 12) {
             alert("Aadhar Number should be 12 digits long!");
-        } else if (this.state.panNumber.length != 10) {
+        } else if (this.state.panNumber.length !== 10) {
             alert("Pan Number should be a 10 digit unique number!");
         } else if (!Number(this.state.age) || this.state.age < 21) {
             alert("Your age must be a number");
@@ -141,7 +141,7 @@ class RegisterFarmer extends Component {
             return (
                 <div>
                     <div className="img-wrapper">
-                        <img src="https://www.kultivate.in/images/contract.png" className="logo" />
+                        <img alt = "image2" src="https://www.kultivate.in/images/contract.png" className="logo" />
                         <div className="wine-text-container">
                             <div className="site-title wood-text">Contract Farming</div>
                         </div>
@@ -166,7 +166,7 @@ class RegisterFarmer extends Component {
             <div className="bodyC">
 
                 <div className="img-wrapper">
-                    <img src="https://www.kultivate.in/images/contract.png" className="logo" />
+                    <img alt = "image1" src="https://www.kultivate.in/images/contract.png" className="logo" />
                     <div className="wine-text-container">
                         <div className="site-title wood-text">AGRICON </div>
                     </div>

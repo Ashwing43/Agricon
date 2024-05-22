@@ -15,7 +15,7 @@ import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
 import "../index.css";
 import ipfs from '../ipfs';
-import { FormControl, FormFile } from 'react-bootstrap'
+import { FormFile } from 'react-bootstrap'
 
 
 const drizzleOptions = {
@@ -141,9 +141,9 @@ class updateBuyer extends Component {
   updateFarmer = async () => {
     if (this.state.name === '' || this.state.age === '' || this.state.city === '' || this.state.email === '' || this.state.aadharNumber === '' || this.state.panNumber === '') {
       alert("All the fields are compulsory!");
-    } else if (this.state.aadharNumber.length != 12) {
+    } else if (this.state.aadharNumber.length !== 12) {
       alert("Aadhar Number should be 12 digits long!");
-    } else if (this.state.panNumber.length != 10) {
+    } else if (this.state.panNumber.length !== 10) {
       alert("Pan Number should be a 10 digit unique number!");
     } else if (!Number(this.state.age)) {
       alert("Your age must be a number");

@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Route, Switch, Redirect, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
@@ -8,8 +8,8 @@ import PerfectScrollbar from "perfect-scrollbar";
 import AdminNavbar from "../../components/Navbars/AdminNavbar";
 import Footer from "../../components/Footer/Footer";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
-import Dashboard from "../../views/Dashboard";
+// import FixedPlugin from "../../components/FixedPlugin/FixedPlugin";
+// import Dashboard from "../../views/Dashboard";
 import routes from "../../routes";
 
 import logo from "../../assets/img/react-logo.png";

@@ -15,7 +15,7 @@ import Farm from "../artifacts/Farm.json";
 import getWeb3 from "../getWeb3";
 import '../index.css';
 import ipfs from '../ipfs';
-import { FormControl, FormFile } from 'react-bootstrap'
+import { FormFile } from 'react-bootstrap'
 
 
 const drizzleOptions = {
@@ -121,13 +121,13 @@ class updateBusiness extends Component {
         await new Promise(resolve => setTimeout(resolve, 10000));
         var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
 
-        if (this.state.business_name == '' || this.state.city == '' || this.state.companyRegistrationNumber == '' || this.state.GSTnumber == '') {
+        if (this.state.business_name === '' || this.state.city === '' || this.state.companyRegistrationNumber === '' || this.state.GSTnumber === '') {
             alert("All the fields are compulsory!");
-        } else if (!Number(this.state.companyRegistrationNumber) || this.state.companyRegistrationNumber.length != 12) {
+        } else if (!Number(this.state.companyRegistrationNumber) || this.state.companyRegistrationNumber.length !== 12) {
             alert("company Registration Number should be 12 digits long!");
-        } else if (this.state.GSTnumber.length != 10) {
+        } else if (this.state.GSTnumber.length !== 10) {
             alert("GST Number should be a 10 digit unique number!");
-        } else if (this.state.email == '' || !pattern.test(this.state.email)) {
+        } else if (this.state.email === '' || !pattern.test(this.state.email)) {
             alert('Please enter a valid email address\n');
         }
         else {

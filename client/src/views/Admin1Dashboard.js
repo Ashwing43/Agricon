@@ -14,8 +14,8 @@ const drizzleOptions = {
     contracts: [Farm]
 }
 
-var verified;
-var row = [];
+// var verified;
+// var row = [];
 var farmerarr = [];
 var businessarr = [];
 var reqsarr = [];

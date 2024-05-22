@@ -80,13 +80,13 @@ class RegisterBusiness extends Component {
         await new Promise(resolve => setTimeout(resolve, 10000));
         var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
 
-        if (this.state.business_name == '' || this.state.city == '' || this.state.companyRegistrationNumber == '' || this.state.GSTnumber == '') {
+        if (this.state.business_name === '' || this.state.city === '' || this.state.companyRegistrationNumber === '' || this.state.GSTnumber === '') {
             alert("All the fields are compulsory!");
-        } else if (!Number(this.state.companyRegistrationNumber) || this.state.companyRegistrationNumber.length != 12) {
+        } else if (!Number(this.state.companyRegistrationNumber) || this.state.companyRegistrationNumber.length !== 12) {
             alert("company Registration Number should be 12 digits long!");
-        } else if (this.state.GSTnumber.length != 10) {
+        } else if (this.state.GSTnumber.length !==10) {
             alert("GST Number should be a 10 digit unique number!");
-        } else if (this.state.email == '' || !pattern.test(this.state.email)) {
+        } else if (this.state.email === '' || !pattern.test(this.state.email)) {
             alert('Please enter a valid email address\n');
         }
         else {
@@ -143,7 +143,7 @@ class RegisterBusiness extends Component {
                 <div className="bodyC">
 
                     <div className="img-wrapper">
-                        <img src="https://www.kultivate.in/images/contract.png" className="logo" />
+                        <img alt="image2" src="https://www.kultivate.in/images/contract.png" className="logo" />
                         <div className="wine-text-container">
                             <div className="site-title wood-text">Contract Farming</div>
                         </div>
@@ -167,7 +167,7 @@ class RegisterBusiness extends Component {
         return (
             <div className="bodyC">
                 <div className="img-wrapper">
-                    <img src="https://www.kultivate.in/images/contract.png" className="logo" />
+                    <img alt = "image1" src="https://www.kultivate.in/images/contract.png" className="logo" />
                     <div className="wine-text-container">
                         <div className="site-title wood-text">AGRICON</div>
                     </div>
