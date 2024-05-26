@@ -75,7 +75,7 @@ class farmerProfile extends Component {
       }
 
       farmer = await this.state.FarmInstance.methods.getFarmerDetails(currentAddress).call();
-      // console.log(buyer);
+      console.log(farmer[5]);
       // console.log(buyer[0]);
 
       farmerTable.push(<>
