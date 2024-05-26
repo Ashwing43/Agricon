@@ -95,7 +95,7 @@ class Dashboard extends Component {
       for (i = 0; i < count; i++) {
         ind++;
         // console.log(rowStatus[i]);
-        if (!rowStatus[i]) {
+        if (!rowStatus[i] && !rowRequest[i]) {
           row.push(
             <tr key={i}>
               <td>{ind}</td>
